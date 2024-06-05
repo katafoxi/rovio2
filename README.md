@@ -22,24 +22,34 @@ Papers:
 
 Please also have a look at the wiki: https://github.com/ethz-asl/rovio/wiki
 
-### Install without opengl scene ###
-Dependencies:
-* ros
-* kindr (https://github.com/ethz-asl/kindr)
-* lightweight_filtering (as submodule, use "git submodule update --init --recursive")
-
+### Installation guide
+* install ROS (https://wiki.ros.org/Documentation) and catkin (https://catkin-tools.readthedocs.io/en/latest/quick_start.html)
+* Initializing a New catkin Workspace  (https://catkin-tools.readthedocs.io/en/latest/quick_start.html#initializing-a-new-workspace)
 ```
-#!command
-
+source /opt/ros/noetic/setup.bash            # Source ROS noetic to use Catkin
+mkdir -p ~/catkin_ws/src                     # Make a new workspace and source space
+cd ~/catkin_ws/                              # Navigate to the workspace root
+catkin init                                  # Initialize it with a hidden marker file
+```
+* install kindr (https://github.com/ethz-asl/kindr) to /src directory of your workspace
+```
+git clone https://github.com/ANYbotics/kindr.git ./src/kindr
+```
+* install rovio2 + lightweight_filtering (as submodule)  package to /src directroy of your workspace
+```
+git clone https://github.com/katafoxi/rovio2.git ./src/rovio2 && git submodule update --init --recursive
+```
+#### install without opengl scene ###
+```
 catkin build rovio --cmake-args -DCMAKE_BUILD_TYPE=Release
 ```
 
-### Install with opengl scene ###
-Additional dependencies: opengl, glut, glew:
+#### Install with opengl scene ###
+*install dependencies: opengl, glut, glew:
 ```
 sudo apt-get install freeglut3-dev libglew-dev
 ```
-after trying build rovio
+* after trying build rovio
 ```
 catkin build rovio --cmake-args -DCMAKE_BUILD_TYPE=Release -DMAKE_SCENE=ON
 ```

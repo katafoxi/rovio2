@@ -37,7 +37,8 @@ git clone https://github.com/ANYbotics/kindr.git ./src/kindr
 ```
 * install rovio2 + lightweight_filtering (as submodule)  package to /src directroy of your workspace
 ```
-git clone https://github.com/katafoxi/rovio2.git ./src/rovio2 && git submodule update --init --recursive
+git clone https://github.com/katafoxi/rovio2.git ./src/rovio2
+git submodule update --init --recursive
 ```
 #### install without opengl scene ###
 ```

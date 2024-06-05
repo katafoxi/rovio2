@@ -35,10 +35,12 @@ catkin build rovio --cmake-args -DCMAKE_BUILD_TYPE=Release
 ```
 
 ### Install with opengl scene ###
-Additional dependencies: opengl, glut, glew (sudo apt-get install freeglut3-dev, sudo apt-get install libglew-dev)
+Additional dependencies: opengl, glut, glew:
 ```
-#!command
-
+sudo apt-get install freeglut3-dev libglew-dev
+```
+after trying build rovio
+```
 catkin build rovio --cmake-args -DCMAKE_BUILD_TYPE=Release -DMAKE_SCENE=ON
 ```
 

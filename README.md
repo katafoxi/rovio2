@@ -14,24 +14,24 @@ Secondly, we use a cheaper feature selection method that reduces the computation
 
 This repository contains the ROVIO (Robust Visual Inertial Odometry) framework. The code is open-source (BSD License). Please remember that it is strongly coupled to on-going research and thus some parts are not fully mature yet. Furthermore, the code will also be subject to changes in the future which could include greater re-factoring of some parts.
 
-Video: https://youtu.be/ZMAISVy-6ao
+[Video](https://youtu.be/ZMAISVy-6ao)
 
 Papers:
-* http://dx.doi.org/10.3929/ethz-a-010566547 (IROS 2015)
-* http://dx.doi.org/10.1177/0278364917728574 (IJRR 2017)
+* [IROS 2015](http://dx.doi.org/10.3929/ethz-a-010566547)
+* [IJRR 2017](http://dx.doi.org/10.1177/0278364917728574)
 
-Please also have a look at the wiki: https://github.com/ethz-asl/rovio/wiki
+Please also have a look at the [rovio_wiki](https://github.com/ethz-asl/rovio/wiki)
 
 ### Installation guide
-* install ROS (https://wiki.ros.org/Documentation) and catkin (https://catkin-tools.readthedocs.io/en/latest/quick_start.html)
-* Initializing a New catkin Workspace  (https://catkin-tools.readthedocs.io/en/latest/quick_start.html#initializing-a-new-workspace)
+* install [ROS](https://wiki.ros.org/Documentation) and [catkin](https://catkin-tools.readthedocs.io/en/latest/quick_start.html)
+* create and initializing a [new catkin workspace](https://catkin-tools.readthedocs.io/en/latest/quick_start.html#initializing-a-new-workspace)
 ```
 source /opt/ros/noetic/setup.bash            # Source ROS noetic to use Catkin
 mkdir -p ~/catkin_ws/src                     # Make a new workspace and source space
 cd ~/catkin_ws/                              # Navigate to the workspace root
 catkin init                                  # Initialize it with a hidden marker file
 ```
-* install kindr (https://github.com/ethz-asl/kindr) to /src directory of your workspace
+* install [kindr](https://github.com/ethz-asl/kindr) to /src directory of your workspace
 ```
 git clone https://github.com/ANYbotics/kindr.git ./src/kindr
 ```
@@ -55,8 +55,7 @@ catkin build rovio --cmake-args -DCMAKE_BUILD_TYPE=Release -DMAKE_SCENE=ON
 ```
 
 ### Euroc Datasets ###
-The rovio_node.launch file loads parameters such that ROVIO runs properly on the Euroc datasets. The datasets are available under:
-http://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets
+The rovio_node.launch file loads parameters such that ROVIO runs properly on the Euroc [datasets](http://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets)
 
 ### Further notes ###
 * Camera matrix and distortion parameters should be provided by a yaml file or loaded through rosparam

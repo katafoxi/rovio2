@@ -1,4 +1,4 @@
 [submodule "lightweight_filtering"]
 	path = lightweight_filtering
-	url = git@github.com:sbahnam/maplab_lightweight_filtering.git
+	url = https://github.com/sbahnam/maplab_lightweight_filtering.git
         branch = ROVIO_faster

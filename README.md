@@ -26,7 +26,7 @@ Please also have a look at the [rovio_wiki](https://github.com/ethz-asl/rovio/wi
 * install [ROS](https://wiki.ros.org/Documentation) and [catkin](https://catkin-tools.readthedocs.io/en/latest/quick_start.html)
 * create and initializing a [new catkin workspace](https://catkin-tools.readthedocs.io/en/latest/quick_start.html#initializing-a-new-workspace)
 ```
-source /opt/ros/noetic/setup.bash            # Source ROS noetic to use Catkin
+source /opt/ros/noetic/setup.bash            # Source ROS version="noetic" to use Catkin
 mkdir -p ~/catkin_ws/src                     # Make a new workspace and source space
 cd ~/catkin_ws/                              # Navigate to the workspace root
 catkin init                                  # Initialize it with a hidden marker file

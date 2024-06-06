@@ -5,8 +5,7 @@ In this fork, some changes have been made for trouble-free installation and depl
 ### ROVIO source ###
 This repository contains the ROVIO (Robust Visual Inertial Odometry) framework. The code is open-source (BSD License). Please remember that it is strongly coupled to on-going research and thus some parts are not fully mature yet. Furthermore, the code will also be subject to changes in the future which could include greater re-factoring of some parts.
 
-[Video](https://youtu.be/ZMAISVy-6ao)     Papers:  [IROS 2015](http://dx.doi.org/10.3929/ethz-a-010566547)      [IJRR 2017](http://dx.doi.org/10.1177/0278364917728574)       
-Please also have a look at the [rovio_wiki](https://github.com/ethz-asl/rovio/wiki)
+[Video](https://youtu.be/ZMAISVy-6ao) ****** Papers:  [IROS 2015](http://dx.doi.org/10.3929/ethz-a-010566547)      [IJRR 2017](http://dx.doi.org/10.1177/0278364917728574) ****** [rovio_wiki](https://github.com/ethz-asl/rovio/wiki)
 
 ### ROVIO_fast (fork ROVIO_source) ###
 The first main change is that we use sparse matrix multiplications in the state prediction and update step of the IEKF. 

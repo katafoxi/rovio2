@@ -53,8 +53,26 @@ catkin build rovio --cmake-args -DCMAKE_BUILD_TYPE=Release -DMAKE_SCENE=ON
 
 ### Euroc Datasets ###
 The rovio_node.launch file loads parameters such that ROVIO runs properly on the Euroc [datasets](http://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets)
+Download test Euroc [Datasets](http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/machine_hall/MH_01_easy/MH_01_easy.bag)
 
 ### Further notes ###
 * Camera matrix and distortion parameters should be provided by a yaml file or loaded through rosparam
 * The cfg/rovio.info provides most parameters for rovio. The camera extrinsics qCM (quaternion from IMU to camera frame, Hamilton-convention) and MrMC (Translation between IMU and Camera expressed in the IMU frame) should also be set there. They are being estimated during runtime so only a rough guess should be sufficient.
 * Especially for application with little motion fixing the IMU-camera extrinsics can be beneficial. This can be done by setting the parameter doVECalibration to false. Please be carefull that the overall robustness and accuracy can be very sensitive to bad extrinsic calibrations.
+
+### Source the environment setup
+
+```
+source devel/setup.bash
+roscd rovio
+cd launch
+roslaunch rovio rovio_node.launch
+```
+open a new terminal window in the directory where the test data set was downloaded
+```
+rosbag play MH_01_easy.bag
+``` 
+
+
+
+

@@ -36,12 +36,12 @@ git clone https://github.com/ANYbotics/kindr.git ./src/kindr
 ```
 git clone --recurse-submodules https://github.com/katafoxi/rovio2.git ./src/rovio
 ```
-#### install without opengl scene ###
+#### install without opengl scene 
 ```
 catkin build rovio --cmake-args -DCMAKE_BUILD_TYPE=Release
 ```
 
-#### Install with opengl scene ###
+#### Install with opengl scene 
 * install dependencies: opengl, glut, glew:
 ```
 sudo apt-get install freeglut3-dev libglew-dev
@@ -61,17 +61,18 @@ Download test Euroc [Datasets](http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_
 * Especially for application with little motion fixing the IMU-camera extrinsics can be beneficial. This can be done by setting the parameter doVECalibration to false. Please be carefull that the overall robustness and accuracy can be very sensitive to bad extrinsic calibrations.
 
 ### Source the environment setup
-
 ```
 source devel/setup.bash
 roscd rovio
 cd launch
 roslaunch rovio rovio_node.launch
 ```
-open a new terminal window in the directory where the test data set was downloaded
+### Open a new terminal window in the directory, where the test data set was downloaded.
 ```
 rosbag play MH_01_easy.bag
-``` 
+```
+![image](https://github.com/katafoxi/rovio2/assets/83884504/0e175aa3-3f01-4420-af75-a4475d60825f)
+
 
 
 

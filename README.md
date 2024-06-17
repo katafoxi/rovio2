@@ -24,8 +24,8 @@ Secondly, we use a cheaper feature selection method that reduces the computation
 * create and initializing a [new catkin workspace](https://catkin-tools.readthedocs.io/en/latest/quick_start.html#initializing-a-new-workspace)
 ```
 source /opt/ros/noetic/setup.bash            # Source ROS version="noetic" to use Catkin
-mkdir -p ~/catkin_ws/src                     # Make a new workspace and source space
-cd ~/catkin_ws/                              # Navigate to the workspace root
+mkdir -p /opt/ros/overlay_ws/src             # Make a new workspace and source space
+cd ~/overlay_ws/                             # Navigate to the workspace root
 catkin init                                  # Initialize it with a hidden marker file
 ```
 * install [kindr](https://github.com/ethz-asl/kindr) to /src directory of your workspace
@@ -60,6 +60,13 @@ Download test Euroc [Datasets](http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_
 * The cfg/rovio.info provides most parameters for rovio. The camera extrinsics qCM (quaternion from IMU to camera frame, Hamilton-convention) and MrMC (Translation between IMU and Camera expressed in the IMU frame) should also be set there. They are being estimated during runtime so only a rough guess should be sufficient.
 * Especially for application with little motion fixing the IMU-camera extrinsics can be beneficial. This can be done by setting the parameter doVECalibration to false. Please be carefull that the overall robustness and accuracy can be very sensitive to bad extrinsic calibrations.
 
+### Download test data
+```
+cd /opt/ros/
+wget http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/machine_hall/MH_01_easy/MH_01_easy.bagh
+cd /opt/ros/overlay_ws
+```
+
 ### Source the environment setup
 ```
 source devel/setup.bash
@@ -69,7 +76,7 @@ roslaunch rovio rovio_node.launch
 ```
 ### Open a new terminal window in the directory, where the test data set was downloaded.
 ```
-rosbag play MH_01_easy.bag
+rosbag play /opt/ros/MH_01_easy.bag
 ```
 ![image](https://github.com/katafoxi/rovio2/assets/83884504/0e175aa3-3f01-4420-af75-a4475d60825f)
 

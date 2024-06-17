@@ -63,7 +63,7 @@ Download test Euroc [Datasets](http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_
 ### Download test data
 ```
 cd /opt/ros/
-wget http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/machine_hall/MH_01_easy/MH_01_easy.bagh
+wget http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/machine_hall/MH_01_easy/MH_01_easy.bag
 cd /opt/ros/overlay_ws
 ```
 

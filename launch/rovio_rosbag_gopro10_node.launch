@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <node pkg="rovio" type="rovio_node" name="rovio" output="screen">
+    <param name="filter_config" value="$(find rovio)/cfg/rovio.info"/>
+    <param name="camera0_config" value="$(find rovio)/cfg/cam0.yaml"/>
+    <param name="imu_topic_name" value="/imu0"/>
+    <param name="cam0_topic_name" value="/cam0/image_raw"/>
+  </node>
+
+  <arg name="base_camera_image" default="gopro/image_raw"/>
+  <arg name="image" default="/cam0/image_raw" />
+
+  <node name="image_republish" pkg="image_transport" type="republish" args="compressed raw">
+      <remap from="in" to="$(arg base_camera_image)" />
+      <remap from="out" to="$(arg image)" />
+  </node>
+
+    <node pkg="rosbag" type="play" name="rosbag_player" args="/home/mks/kalvid/way.bag">
+    <!-- <param name="_image_transport" value="compressed"/> -->
+    <!-- <remap from="/gopro/image_raw/compressed" to="/cam0/image_raw/compressed"/> -->
+    <remap from="/gopro/imu" to="/imu0" />
+  </node>
+
+</launch>
+

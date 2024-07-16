@@ -133,26 +133,27 @@ class RovioNode{
   std::mutex m_filter_;
 
   // Nodes, Subscriber, Publishers
-  ros::NodeHandle nh_;
-  ros::NodeHandle nh_private_;
-  ros::Subscriber subImu_;
-  ros::Subscriber subImg0_;
-  ros::Subscriber subImg1_;
-  ros::Subscriber subGroundtruth_;
-  ros::Subscriber subGroundtruthOdometry_;
-  ros::Subscriber subVelocity_;
-  ros::ServiceServer srvResetFilter_;
-  ros::ServiceServer srvResetToPoseFilter_;
-  ros::Publisher pubOdometry_;
-  ros::Publisher pubTransform_;
-  ros::Publisher pubPoseWithCovStamped_;
-  ros::Publisher pub_T_J_W_transform;
-  tf::TransformBroadcaster tb_;
-  ros::Publisher pubPcl_;            /**<Publisher: Ros point cloud, visualizing the landmarks.*/
-  ros::Publisher pubPatch_;            /**<Publisher: Patch data.*/
-  ros::Publisher pubMarkers_;          /**<Publisher: Ros line marker, indicating the depth uncertainty of a landmark.*/
-  ros::Publisher pubExtrinsics_[mtState::nCam_];
-  ros::Publisher pubImuBias_;
+  ros::NodeHandle nh_;  
+  ros::NodeHandle nh_private_ ;
+  ros::Subscriber subImu_;  
+  ros::Subscriber subImg0_; 
+  ros::Subscriber subImg1_; 
+  ros::Subscriber subGroundtr uth_;
+  ros::Subscriber subGroundtr uthOdometry_;
+  ros::Subscriber subVelocity _;
+  ros::ServiceServer srvReset Filter_;
+  ros::ServiceServer srvReset ToPoseFilter_;
+  ros::Publisher pubOdometry_ ;
+  ros::Publisher pubTransform _;
+  ros::Publisher pubPoseWithC ovStamped_;
+  ros::Publisher pub_T_J_W_tr ansform;
+  ros::Publisher pubPath_;        /** add rviz https://github.com/cggos/rovio_cg/commit/77d4c13cf9995bfd76aee9c5b042eb303b5ab019 */
+  tf::TransformBroadcaster tb _;
+  ros::Publisher pubPcl_;             /**<Publisher: Ros point cloud, visualizing the landmarks.*/
+  ros::Publisher pubPatch_;             /**<Publisher: Patch data.*/
+  ros::Publisher pubMarkers_;           /**<Publisher: Ros line marker, indicating the depth uncertainty of a landmark.*/
+  ros::Publisher pubExtrinsic s_[mtState::nCam_];
+  ros::Publisher pubImuBias_; 
 
   // Ros Messages
   geometry_msgs::TransformStamped transformMsg_;

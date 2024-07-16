@@ -2,8 +2,8 @@
 <launch>
 
   <node pkg="rovio" type="rovio_node" name="rovio" output="screen">
-    <param name="filter_config" value="$(find rovio)/cfg/rovio.info"/>
-    <param name="camera0_config" value="$(find rovio)/cfg/cam0.yaml"/>
+    <param name="filter_config" value="$(find rovio)/cfg/gopro10/rovio.info"/>
+    <param name="camera0_config" value="$(find rovio)/cfg/gopro10/gopro10_cam0.yaml"/>
     <param name="imu_topic_name" value="/imu0"/>
     <param name="cam0_topic_name" value="/cam0/image_raw"/>
   </node>

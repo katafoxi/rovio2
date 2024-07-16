@@ -255,10 +255,10 @@ class RovioNode{
     pubImuBias_ = nh_.advertise<sensor_msgs::Imu>("rovio/imu_biases", 1 );
 
     // Handle coordinate frame naming
-    map_frame_ = "/map";
-    world_frame_ = "/world";
-    camera_frame_ = "/camera";
-    imu_frame_ = "/imu";
+    map_frame_ = "map";
+    world_frame_ = "world";
+    camera_frame_ = "camera";
+    imu_frame_ = "imu";
     nh_private_.param("map_frame", map_frame_, map_frame_);
     nh_private_.param("world_frame", world_frame_, world_frame_);
     nh_private_.param("camera_frame", camera_frame_, camera_frame_);

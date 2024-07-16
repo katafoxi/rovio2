@@ -22,11 +22,12 @@
       <remap from="out" to="$(arg image)" />
   </node>
 
-    <node pkg="rosbag" type="play" name="rosbag_player" args="/home/mks/kalvid/way.bag">
+    <node pkg="rosbag" type="play" name="rosbag_player" args="--delay 5 /home/mks/kalvid/way.bag">
+    
     <!-- <param name="_image_transport" value="compressed"/> -->
     <!-- <remap from="/gopro/image_raw/compressed" to="/cam0/image_raw/compressed"/> -->
     <remap from="/gopro/imu" to="/imu" />
   </node>
 
-</launch>
+</launch>s
 

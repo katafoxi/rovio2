@@ -4,14 +4,14 @@
   <arg name="rviz" default="false"/>
 
   <group if="$(arg rviz)">
-    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find rovio)/launch/rovio.rviz" />
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find rovio)/cfg/rovio.rviz" />
   </group>
 
   <!-- node pkg="rovio" type="rovio_rosbag_loader" name="rovio" output="screen"> -->
   <node pkg="rovio" type="rovio_node" name="rovio" output="screen">
-  <param name="filter_config" value="$(find rovio)/cfg/rovio.info"/>
-  <param name="camera0_config" value="$(find rovio)/cfg/euroc_cam0.yaml"/>
-  <param name="camera1_config" value="$(find rovio)/cfg/euroc_cam1.yaml"/>
+  <param name="filter_config" value="$(find rovio)/cfg/euroc/rovio.info"/>
+  <param name="camera0_config" value="$(find rovio)/cfg/euroc/euroc_cam0.yaml"/>
+  <param name="camera1_config" value="$(find rovio)/cfg/euroc/euroc_cam1.yaml"/>
 	<!-- param name="rosbag_filename" value="/home/michael/datasets/euroc/01_easy/dataset.bag"/> -->
   <!-- <node pkg="rosbag" type="play" name="rosbag_filename" args="/home/mks/ws/src/MH_01_easy.bag"/> -->
   <param name="imu_topic_name" value="/imu0"/>
@@ -19,6 +19,6 @@
   <param name="cam1_topic_name" value="/cam1/image_raw"/>
   </node>
 
-  <node pkg="rosbag" type="play" name="rosbag_player" args="/home/mks/ws/src/MH_01_easy.bag"/>
+  <node pkg="rosbag" type="play" name="rosbag_player" args="$(find rovio)/rosbags/euroc/MH_01_easy.bag"/>
 
 </launch>

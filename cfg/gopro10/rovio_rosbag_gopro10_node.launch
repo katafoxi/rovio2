@@ -23,7 +23,7 @@
       <remap from="out" to="$(arg image)" />
   </node>
 
-    <node pkg="rosbag" type="play" name="rosbag_player" args="--delay 1 /home/mks/1video/fly.bag">
+    <node pkg="rosbag" type="play" name="rosbag_player" args="--delay 1 $(find rovio)/rosbags/gopro10/way.bag">
     
     <!-- <param name="_image_transport" value="compressed"/> -->
     <!-- <remap from="/gopro/image_raw/compressed" to="/cam0/image_raw/compressed"/> -->

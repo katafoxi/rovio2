@@ -5,7 +5,7 @@
   <arg name="conf_version" default=""/>
 
   <group if="$(arg rviz)">
-    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find rovio)/launch/rovio.rviz" />
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find rovio)/cfg/rovio.rviz" />
   </group>
 
   <node pkg="rovio" type="rovio_node" name="rovio" output="screen">

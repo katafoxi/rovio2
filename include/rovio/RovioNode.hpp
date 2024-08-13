@@ -157,7 +157,6 @@ class RovioNode{
   ros::Publisher pubExtrinsics_[mtState::nCam_];
   ros::Publisher pubImuBias_; 
 
-  ros::Publisher pubPath_;       /** add rviz https://github.com/cggos/rovio_cg/commit/77d4c13cf9995bfd76aee9c5b042eb303b5ab019 */
 
 
   // Ros Messages
@@ -854,7 +853,7 @@ class RovioNode{
           }
           pubOdometry_.publish(odometryMsg_);
 
-          // Publish the path
+          // Publish the path                     add rviz: https://github.com/cggos/rovio_cg/commit/77d4c13cf9995bfd76aee9c5b042eb303b5ab019
           geometry_msgs::PoseStamped pose_stamped;
           pose_stamped.header.seq = msgSeq_;
           pose_stamped.header.stamp = ros::Time(mpFilter_->safe_.t_);

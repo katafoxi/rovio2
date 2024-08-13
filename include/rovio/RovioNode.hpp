@@ -59,6 +59,8 @@
 #include "rovio/CoordinateTransform/YprOutput.hpp"
 #include "rovio/CoordinateTransform/LandmarkOutput.hpp"
 
+#include <nav_msgs/Path.h>   /** add rviz https://github.com/cggos/rovio_cg/commit/77d4c13cf9995bfd76aee9c5b042eb303b5ab019 */
+
 #define IMG_CALLBACK_LOG
 #define TIME_LOG
 #define SAVE_VIO_TO_TXT
@@ -155,6 +157,9 @@ class RovioNode{
   ros::Publisher pubExtrinsics_[mtState::nCam_];
   ros::Publisher pubImuBias_; 
 
+  ros::Publisher pubPath_;       /** add rviz https://github.com/cggos/rovio_cg/commit/77d4c13cf9995bfd76aee9c5b042eb303b5ab019 */
+
+
   // Ros Messages
   geometry_msgs::TransformStamped transformMsg_;
   geometry_msgs::TransformStamped T_J_W_Msg_;
@@ -165,6 +170,8 @@ class RovioNode{
   sensor_msgs::PointCloud2 patchMsg_;
   visualization_msgs::Marker markerMsg_;
   sensor_msgs::Imu imuBiasMsg_;
+  nav_msgs::Path pathMsg_; /** add rviz https://github.com/cggos/rovio_cg/commit/77d4c13cf9995bfd76aee9c5b042eb303b5ab019 */
+
   int msgSeq_;
 
   // Rovio outputs and coordinate transformations
@@ -213,11 +220,17 @@ class RovioNode{
     gotFirstMessages_ = false;
 
     // Subscribe topics
-    subImu_ = nh_.subscribe("imu0", 1000, &RovioNode::imuCallback,this);
-    // subImu_ = nh_.subscribe("/snappy_imu", 1000, &RovioNode::imuCallback,this);
-    subImg0_ = nh_.subscribe("cam0/image_raw", 1000, &RovioNode::imgCallback0,this);
-    // subImg0_ = nh_.subscribe("/snappy_cam/stereo_l", 1000, &RovioNode::imgCallback0,this);
-    subImg1_ = nh_.subscribe("cam1/image_raw", 1000, &RovioNode::imgCallback1,this);
+    std::string imu_topic_name = "/imu0";
+    nh_private.param("imu_topic_name", imu_topic_name, imu_topic_name);
+    std::string cam0_topic_name = "/cam0/image_raw";
+    nh_private.param("cam0_topic_name", cam0_topic_name, cam0_topic_name);
+    std::string cam1_topic_name = "/cam1/image_raw";
+    nh_private.param("cam1_topic_name", cam1_topic_name, cam1_topic_name);
+
+    subImu_  = nh_.subscribe(imu_topic_name, 1000, &RovioNode::imuCallback,this);
+    subImg0_ = nh_.subscribe(cam0_topic_name, 1000, &RovioNode::imgCallback0,this);
+    subImg1_ = nh_.subscribe(cam1_topic_name, 1000, &RovioNode::imgCallback1,this);
+    
     subGroundtruth_ = nh_.subscribe("pose", 1000, &RovioNode::groundtruthCallback,this);
     subGroundtruthOdometry_ = nh_.subscribe("odometry", 1000, &RovioNode::groundtruthOdometryCallback, this);
     subVelocity_ = nh_.subscribe("abss/twist", 1000, &RovioNode::velocityCallback,this);
@@ -234,6 +247,8 @@ class RovioNode{
     pubPatch_ = nh_.advertise<sensor_msgs::PointCloud2>("rovio/patch", 1);
     pubMarkers_ = nh_.advertise<visualization_msgs::Marker>("rovio/markers", 1 );
 
+    pubPath_ = nh.advertise<nav_msgs::Path>("rovio/path", 1); /** add rviz https://github.com/cggos/rovio_cg/commit/77d4c13cf9995bfd76aee9c5b042eb303b5ab019 */
+
     pub_T_J_W_transform = nh_.advertise<geometry_msgs::TransformStamped>("rovio/T_G_W", 1);
     for(int camID=0;camID<mtState::nCam_;camID++){
       pubExtrinsics_[camID] = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("rovio/extrinsics" + std::to_string(camID), 1 );
@@ -241,10 +256,10 @@ class RovioNode{
     pubImuBias_ = nh_.advertise<sensor_msgs::Imu>("rovio/imu_biases", 1 );
 
     // Handle coordinate frame naming
-    map_frame_ = "/map";
-    world_frame_ = "/world";
-    camera_frame_ = "/camera";
-    imu_frame_ = "/imu";
+    map_frame_ = "map";
+    world_frame_ = "world";
+    camera_frame_ = "camera";
+    imu_frame_ = "imu";
     nh_private_.param("map_frame", map_frame_, map_frame_);
     nh_private_.param("world_frame", world_frame_, world_frame_);
     nh_private_.param("camera_frame", camera_frame_, camera_frame_);
@@ -259,6 +274,9 @@ class RovioNode{
 
     odometryMsg_.header.frame_id = world_frame_;
     odometryMsg_.child_frame_id = imu_frame_;
+
+    pathMsg_.header.frame_id = world_frame_; /** add rviz https://github.com/cggos/rovio_cg/commit/77d4c13cf9995bfd76aee9c5b042eb303b5ab019 */
+
     msgSeq_ = 1;
     for(int camID=0;camID<mtState::nCam_;camID++){
       extrinsicsMsg_[camID].header.frame_id = imu_frame_;
@@ -835,6 +853,17 @@ class RovioNode{
             }
           }
           pubOdometry_.publish(odometryMsg_);
+
+          // Publish the path
+          geometry_msgs::PoseStamped pose_stamped;
+          pose_stamped.header.seq = msgSeq_;
+          pose_stamped.header.stamp = ros::Time(mpFilter_->safe_.t_);
+          pose_stamped.pose = odometryMsg_.pose.pose;
+
+          pathMsg_.header.seq = msgSeq_;
+          pathMsg_.header.stamp = ros::Time(mpFilter_->safe_.t_);
+          pathMsg_.poses.push_back(pose_stamped);
+          pubPath_.publish(pathMsg_);
         }
 
         if(pubPoseWithCovStamped_.getNumSubscribers() > 0 || forcePoseWithCovariancePublishing_){

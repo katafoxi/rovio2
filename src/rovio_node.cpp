@@ -47,7 +47,7 @@
 #ifdef ROVIO_NMAXFEATURE
 static constexpr int nMax_ = ROVIO_NMAXFEATURE;
 #else
-static constexpr int nMax_ = 25; // Maximal number of considered features in the filter state.
+static constexpr int nMax_ = 12; // Maximal number of considered features in the filter state.
 #endif
 
 #ifdef ROVIO_NLEVELS
@@ -59,7 +59,7 @@ static constexpr int nLevels_ = 4; // // Total number of pyramid levels consider
 #ifdef ROVIO_PATCHSIZE
 static constexpr int patchSize_ = ROVIO_PATCHSIZE;
 #else
-static constexpr int patchSize_ = 6; // Edge length of the patches (in pixel). Must be a multiple of 2!
+static constexpr int patchSize_ = 4; // Edge length of the patches (in pixel). Must be a multiple of 2!
 #endif
 
 #ifdef ROVIO_NCAM

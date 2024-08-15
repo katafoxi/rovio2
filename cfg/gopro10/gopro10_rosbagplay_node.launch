@@ -2,7 +2,7 @@
 <launch>
 
   <arg name="rviz" default="false"/>
-  <arg name="conf_version" default=""/>
+  <arg name="conf_version" default="16_16"/>
 
   <group if="$(arg rviz)">
     <node pkg="rviz" type="rviz" name="rviz" args="-d $(find rovio)/cfg/rovio.rviz" />

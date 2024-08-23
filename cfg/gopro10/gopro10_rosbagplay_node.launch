@@ -6,7 +6,7 @@
 <launch>
 
   <arg name="rviz" default="false"/> <!-- Включать ли визуализацию rviz-->
-  <arg name="conf_version" default="16_16"/> 
+  <arg name="conf_prefix" default="16_16"/> 
   <arg name="bag" default="way.bag"/>
   <arg name="cam_name" default="gopro10"/>
 
@@ -14,10 +14,10 @@
 
   <node pkg="rovio" type="rovio_node" name="rovio" output="screen">
     <param name="filter_config" 
-    value="$(find rovio)/cfg/$(arg cam_name)/$(arg conf_version)_rovio.info"/>
+    value="$(find rovio)/cfg/$(arg cam_name)/$(arg conf_prefix)_rovio.info"/>
 
     <param name="camera0_config" 
-    value="$(find rovio)/cfg/$(arg cam_name)/$(arg conf_version)_cam0.yaml"/>
+    value="$(find rovio)/cfg/$(arg cam_name)/$(arg conf_prefix)_cam0.yaml"/>
 
     <param name="imu_topic_name" value="/imu"/>
     <param name="cam0_topic_name" value="/cam0/image_raw"/>
@@ -44,7 +44,7 @@
     <!-- <remap from="/gopro/image_raw/compressed" to="/cam0/image_raw/compressed"/> -->
     <remap from="/gopro/imu" to="/imu" />
   </node>
-  
+
   <!--######################################################################-->
 
   <group if="$(arg rviz)">

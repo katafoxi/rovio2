@@ -1,46 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
 
-  <arg name="rviz" default="false"/>
-  <arg name="conf_version" default="16_16"/>
-  <arg name="bag" default="way.bag"/>
-  <arg name="record" default="false"/>
   <arg name="cfg_kit" default="gopro10"/>
+  <arg name="conf_prefix" default="16_16"/>
+  <arg name="imu_topic_name" default="/gopro/imu"/>
+  <arg name="image_topic_name" default="/cam0/image_raw" />
 
-  <group if="$(arg rviz)">
-    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find rovio)/cfg/rovio.rviz" />
-  </group>
 
   <node pkg="rovio" type="rovio_node" name="rovio" output="screen">
-    <param name="filter_config" value="$(find rovio)/cfg/$(arg cfg_kit)/$(arg conf_version)_rovio.info"/>
-    <param name="camera0_config" value="$(find rovio)/cfg/$(arg cfg_kit)/$(arg conf_version)_cam0.yaml"/>
-    <param name="imu_topic_name" value="/imu"/>
-    <param name="cam0_topic_name" value="/cam0/image_raw"/>
+    <param name="filter_config" 
+      value="$(find rovio)/cfg/$(arg cfg_kit)/$(arg conf_prefix)_rovio.info"/>
+    <param name="camera0_config" 
+      value="$(find rovio)/cfg/$(arg cfg_kit)/$(arg conf_prefix)_cam0.yaml"/>
+    <param name="imu_topic_name"  value="$(arg imu_topic_name)"/>
+    <param name="cam0_topic_name" value="$(arg image_topic_name)"/>
   </node>
-
-  <arg name="base_camera_image" default="gopro/image_raw"/>
-  <arg name="image" default="/cam0/image_raw" />
-
-  <node name="image_republish" pkg="image_transport" type="republish" args="compressed raw">
-      <remap from="in" to="$(arg base_camera_image)" />
-      <remap from="out" to="$(arg image)" />
-  </node>
-
-  <node pkg="rosbag" type="play" name="rosbag_player" required="true" args="--delay 1 $(find rovio)/rosbags/$(arg cfg_kit)/$(arg bag)">
-    
-    <!-- <param name="_image_transport" value="compressed"/> -->
-    <!-- <remap from="/gopro/image_raw/compressed" to="/cam0/image_raw/compressed"/> -->
-    <remap from="/gopro/imu" to="/imu" />
-  </node>
-
-  <!-- Если необходимо записывать результаты работы ROVIO в rosbag-файл в запустить лаунчер с аргументом record:=true -->
-  <group if="$(arg record)">
-    <node pkg="rosbag" 
-    type="record" name="rovio_out_rosbag_recorder" 
-    args="record -O $(find rovio)/rosbags/$(arg cfg_kit)/out  /rovio/odometry /rovio/path /rovio/pose_with_covariance_stamped">
-    </node>
-  </group>
-
 
 </launch>
 

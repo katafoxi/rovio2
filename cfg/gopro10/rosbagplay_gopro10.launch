@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Лаунчер запускает работу алгоритма ROVIO.
+На вход алгоритма подаются данные, полученные от проигрывание rosbag-файла,
+полученного после конвертации из формата MP4 в формат rosbag.-->
+<launch>
+
+  <arg name="cfg_kit" default="gopro10" />
+  <arg name="kit_dir" default="$(find rovio)/cfg/$(arg cfg_kit)" />
+  <arg name="conf_prefix" default="16_16" />
+  <arg name="bag_name" default="way.bag" />
+  <arg name="imu_topic_name" default="/gopro/imu" />
+  <arg name="base_camera_image" default="gopro/image_raw" />
+  <arg name="image_topic_name" default="/cam0/image_raw" />
+  <arg name="rviz" default="false" /> <!-- Включать ли визуализацию rviz?-->
+  <!-- Записывать ли результаты работы ROVIO? -->
+  <arg name="rovio_out_record" default="false" /> 
+
+  <!--######################################################################-->
+
+  <node name="image_republish" pkg="image_transport"
+    type="republish" args="compressed raw">
+    <remap from="in" to="$(arg base_camera_image)" />
+    <remap from="out" to="$(arg image)" />
+  </node>
+
+  <!--######################################################################-->
+
+  <include file="$(find rovio)/cfg/rovio_1cam.launch">
+    <arg name="cfg_kit" value="$(arg cfg_kit)" />
+    <arg name="conf_prefix" value="$(arg conf_prefix)" />
+    <arg name="imu_topic_name" value="$(arg imu_topic_name)" />
+    <arg name="image_topic_name" value="$(arg image_topic_name)" />
+  </include>
+
+  <!--######################################################################-->
+
+  <!--rosbag_play node -->
+  <node pkg="rosbag" type="play" name="rosbag_player"
+    args="--delay 1 $(arg kit_dir)/bags/$(arg bag_name)">
+  </node>
+
+  <!-- Если необходимо записывать результаты работы ROVIO в rosbag-файл в 
+    запустить лаунчер с аргументом record:=true -->
+  <group if="$(arg rovio_out_record)">
+    <node pkg="rosbag"
+      type="record" name="rovio_out_recorder"
+      args="record -O $(arg kit_dir)/bags/rovio_out  
+        /rovio/odometry 
+        /rovio/path 
+        /rovio/pose_with_covariance_stamped">
+    </node>
+  </group>
+
+  <!--######################################################################-->
+
+  <group if="$(arg rviz)">
+    <node pkg="rviz" type="rviz" name="rviz"
+      args="-d $(find rovio)/cfg/rovio.rviz" />
+  </group>
+
+</launch>

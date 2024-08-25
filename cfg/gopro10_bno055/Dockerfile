@@ -1,8 +1,11 @@
-#FROM ros:noetic-ros-base
-FROM arm64v8/ros:noetic-ros-base
+# ------------------CHOSEE type architecture-----------------------------------
+FROM ros:noetic-ros-base
+#FROM arm64v8/ros:noetic-ros-base
 
 SHELL ["/bin/bash", "-c"]
 ARG WS=/opt/ros/overlay_ws
+ARG cfg_kit=gopro10_bno055
+ARG opengl_scene=true
 
 WORKDIR $WS/src
 WORKDIR $WS/
@@ -26,12 +29,14 @@ RUN <<EOT bash
       git clone https://github.com/ANYbotics/kindr.git ./src/kindr
       git clone --recurse-submodules https://github.com/katafoxi/rovio2.git ./src/rovio
       git clone https://github.com/CopterExpress/clover.git ./src/clover
+      git clone https://github.com/dheera/ros-imu-bno055.git ./src/ros_imu_bno055
       rosdep install --from-paths src --ignore-src -r -y
       echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
       source ~/.bashrc
 
 EOT
 
+#------------------------------------------------------------------------------
 # It is necessary to select the appropriate Rovio build option
 RUN <<EOT bash
   source ~/.bashrc
@@ -39,28 +44,40 @@ RUN <<EOT bash
   catkin config --extend /opt/ros/${ROS_DISTRO}
   source ${WS}/devel/setup.bash
 
-  # uncomment to build ROVIO without OpenGL scene
-  catkin build rovio -j 1 --mem-limit 70% --cmake-args -DCMAKE_BUILD_TYPE=Release -DROVIO_NCAM=1
+  # build ROVIO with or without OpenGL scene
+  if ${opengl_scene}; then
+    catkin build rovio \
+    -j1 --mem-limit 70% \
+    --cmake-args -DCMAKE_BUILD_TYPE=Release -DROVIO_NCAM=1 -DMAKE_SCENE=ON
+  else
+    catkin build rovio \
+    -j1 --mem-limit 70% \
+    --cmake-args -DCMAKE_BUILD_TYPE=Release -DROVIO_NCAM=1
+  fi
 
-  #build rovio with OpenGL scene
-  #catkin build rovio -j 1 --mem-limit 70% --cmake-args -DCMAKE_BUILD_TYPE=Release -DROVIO_NCAM=1 -DMAKE_SCENE=ON
-  
-  #build clover package
-  # https://github.com/CopterExpress/clover/tree/master/clover
-  rosdep install -y --from-paths src --ignore-src
-  catkin build clover -j1 --mem-limit 70%
 EOT
 
+#------------------------------------------------------------------------------
+# install and build clover pkg
+# https://github.com/CopterExpress/clover/tree/master/clover
+RUN <<EOT bash
+
+
+  rosdep install -y --from-paths src --ignore-src
+  catkin build clover -j1 --mem-limit 70%
+
+EOT
+
+#------------------------------------------------------------------------------
 #install and build ros_imu_bno055 module
 RUN <<EOT bash
   sudo apt install -y libi2c-dev
 
-  source /opt/ros/${ROS_DISTRO}/setup.bash
-  catkin config --extend /opt/ros/${ROS_DISTRO}
   source ${WS}/devel/setup.bash
-
-  git clone https://github.com/dheera/ros-imu-bno055.git ./src/ros_imu_bno055
-  catkin build imu_bno055 -j1 --mem-limit 70% --cmake-args -DCMAKE_BUILD_TYPE=Release 
+  
+  rosdep install -y --from-paths src --ignore-src
+  catkin build imu_bno055 -j1 --mem-limit 70% \
+  --cmake-args -DCMAKE_BUILD_TYPE=Release 
 
 EOT
 
@@ -82,6 +99,6 @@ USER ${user}
 
 #------------------------------------------------------------------------------
 # launch ros package
-ENTRYPOINT ["/opt/ros/overlay_ws/src/rovio/cfg/gopro10_docker/entrypoint.sh"]
-# CMD ["bash"]
+#ENTRYPOINT ["/opt/ros/overlay_ws/src/rovio/cfg/${cfg_kit}/entrypoint.sh"]
+CMD ["/bin/bash"]
 # CMD tail -f /dev/null

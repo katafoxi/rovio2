@@ -11,29 +11,30 @@ WORKDIR $WS/src
 WORKDIR $WS/
 
 RUN <<EOT bash
-      apt-get update && apt-get install -y \
-      git \
-      pip \
-      wget \
-      freeglut3-dev \
-      libglew-dev \
-      libyaml-cpp-dev \
-      python3-psutil \
-      python3-rosdep \
-      ros-$ROS_DISTRO-rviz \
-      ros-$ROS_DISTRO-image-transport \
-      ros-$ROS_DISTRO-image-transport-plugins 
-      sudo pip3 install -U catkin_tools
-      rosdep init
-      catkin init
-      git clone https://github.com/ANYbotics/kindr.git ./src/kindr
-      git clone --recurse-submodules https://github.com/katafoxi/rovio2.git ./src/rovio
-      rosdep install --from-paths src --ignore-src -r -y
-      echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
-      source ~/.bashrc
+  apt-get update && apt-get install -y \
+  git \
+  pip \
+  wget \
+  freeglut3-dev \
+  libglew-dev \
+  libyaml-cpp-dev \
+  python3-psutil \
+  python3-rosdep \
+  ros-$ROS_DISTRO-rviz \
+  ros-$ROS_DISTRO-image-transport \
+  ros-$ROS_DISTRO-image-transport-plugins 
+  sudo pip3 install -U catkin_tools
+  rosdep init
+  catkin init
+  git clone https://github.com/ANYbotics/kindr.git ./src/kindr
+  git clone --recurse-submodules https://github.com/katafoxi/rovio2.git ./src/rovio
+  rosdep install --from-paths src --ignore-src -r -y
+  echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
+  source ~/.bashrc
 
 EOT
 
+#------------------------------------------------------------------------------
 # It is necessary to select the appropriate Rovio build option
 RUN <<EOT bash
   source ~/.bashrc

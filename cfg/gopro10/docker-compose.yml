@@ -22,19 +22,7 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./.docker.xauth:/tmp/.docker.xauth:rw
-      - ./cfg_docker_volume/:/opt/ros/overlay_ws/src/rovio/cfg/gopro10_docker
-      - ./rosbags_docker_volume/:/opt/ros/overlay_ws/src/rovio/rosbags/gopro10_docker
-      - /dev/video0:/dev/video0 # Проброс устройства для обработки видео https://foundries.io/insights/blog/sharing-camera-with-docker/
-      - /etc/localtime:/etc/localtime:ro # Монтирование настроек времени
-      - /dev/i2c-1:/dev/i2c-1 #Проброс устройства i2c
+      - .:/opt/ros/overlay_ws/src/rovio/cfg/gopro10
       
-    devices:  
-    - "/dev/i2c-1:/dev/i2c-1"  #https://stackoverflow.com/questions/40265984/i2c-inside-a-docker-container
-
-    device_cgroup_rules:
-      - 'c 81:* rmw' #Установка прав доступа к символьному устроййству основным номером 81:*
-      #ls -l /dev/video0 узнать основной и младший номер устройства камеры
-      - 'c 89:* rmw' #Установка прав доступа к символьному устройству I2C датчику
-
     network_mode: host
 

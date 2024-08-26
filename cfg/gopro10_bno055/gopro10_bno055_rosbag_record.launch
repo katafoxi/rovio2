@@ -55,12 +55,12 @@
 
   <!--######################################################################-->
 
-<!--  <include file="$(find rovio)/cfg/rovio_1cam.launch">
+  <include file="$(find rovio)/cfg/rovio_1cam.launch">
     <arg name="cfg_kit" value="$(arg cfg_kit)" />
     <arg name="conf_prefix" value="$(arg conf_prefix)" />
     <arg name="imu_topic_name" value="$(arg imu_topic_name)" />
     <arg name="image_topic_name" value="$(arg image_topic_name)" />
-  </include>-->
+  </include>
 
   <!--######################################################################-->
 

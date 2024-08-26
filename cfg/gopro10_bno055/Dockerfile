@@ -97,6 +97,11 @@ RUN useradd -m $USERNAME && \
   groupmod --gid ${gid} $USERNAME
 USER ${user}
 
+# https://answers.ros.org/question/10238/unable-to-contact-my-own-server/
+ENV ROS_HOSTNAME=localhost
+ENV ROS_MASTER_URI=http://localhost:11311
+RUN echo "source ${WS}/devel/setup.bash">> ~/.bashrc
+
 #------------------------------------------------------------------------------
 # launch ros package
 #ENTRYPOINT ["/opt/ros/overlay_ws/src/rovio/cfg/${cfg_kit}/entrypoint.sh"]

@@ -9,40 +9,65 @@
   <arg name="kit_dir" default="$(find rovio)/cfg/$(arg cfg_kit)" />
 <!--  <arg name="conf_prefix" default="16_16" />
   <arg name="bag_name" default="way.bag" />-->
-  <arg name="imu_topic_name" default="/gopro/imu" />
-  <arg name="base_camera_image" default="gopro/image_raw" />
+  <arg name="imu_topic_name" default="imu/data" />
+  <arg name="base_camera_image" default="/main_camera/image_raw" />
   <arg name="image_topic_name" default="/cam0/image_raw" />
   <arg name="rviz" default="false" /> <!-- Включать ли визуализацию rviz?-->
   <!-- Записывать ли результаты работы ROVIO? -->
   <arg name="rovio_out_record" default="false" /> 
+
+  <arg name="camera_info_url" default="file://$(find clover)/camera_info/fisheye_cam.yaml" />
+  <arg name="rate" default="100"/> <!-- poll rate -->
+  <arg name="cv_cap_prop_fps" default="40" /> <!-- camera FPS -->
+  <arg name="rescale_camera_info" default="false"/> <!-- automatically rescale camera calibration info -->
+  <arg name="image_width" value="1920"/>
+  <arg name="image_height" value="1080"/>
+
+
+
+  <!--######################################################################-->
+
+  <include file="$(arg kit_dir)/main_camera.launch">
+    <arg name="direction_z" default="down"/> <!-- direction the camera points: down, up -->
+    <arg name="direction_y" default="backward"/> <!-- direction the camera cable points: backward, forward -->
+    <arg name="device" default="/dev/video0"/> <!-- v4l2 device -->
+    <arg name="throttled_topic" default="true"/> <!-- enable throttled image topic -->
+    <arg name="throttled_topic_rate" default="5.0"/> <!-- throttled image topic rate -->
+    <arg name="rectify" default="false"/> <!-- enable rectification -->
+    <arg name="simulator" default="false"/>
+
+    <arg name="camera_info_url" default="$(arg camera_info_url)" />
+    <arg name="rate" default="$(arg rate)"/> <!-- poll rate -->
+    <arg name="cv_cap_prop_fps" default="$(arg cv_cap_prop_fps)" /> <!-- camera FPS -->
+    <arg name="rescale_camera_info" default="$(arg rescale_camera_info)"/> <!-- automatically rescale camera calibration info -->
+    <arg name="image_width" default="$(arg image_width)" />
+    <arg name="image_height" default="$(arg image_height)" />
+
+  </include>
 
   <!--######################################################################-->
 
   <node name="image_republish" pkg="image_transport"
     type="republish" args="compressed raw">
     <remap from="in" to="$(arg base_camera_image)" />
-    <remap from="out" to="$(arg image)" />
+    <remap from="out" to="$(arg image_topic_name)" />
   </node>
 
   <!--######################################################################-->
 
-  <include file="$(find rovio)/cfg/rovio_1cam.launch">
+<!--  <include file="$(find rovio)/cfg/rovio_1cam.launch">
     <arg name="cfg_kit" value="$(arg cfg_kit)" />
     <arg name="conf_prefix" value="$(arg conf_prefix)" />
     <arg name="imu_topic_name" value="$(arg imu_topic_name)" />
     <arg name="image_topic_name" value="$(arg image_topic_name)" />
-  </include>
+  </include>-->
 
   <!--######################################################################-->
 
-  <!--rosbag_play node -->
-  <node pkg="rosbag" type="play" name="rosbag_player"
-    args="--delay 1 $(arg kit_dir)/bags/$(arg bag_name)">
-  </node>
 
   <!-- Если необходимо записывать результаты работы ROVIO в rosbag-файл в 
     запустить лаунчер с аргументом record:=true -->
-  <group if="$(arg rovio_out_record)">
+<!--  <group if="$(arg rovio_out_record)">
     <node pkg="rosbag"
       type="record" name="rovio_out_recorder"
       args="record -O $(arg kit_dir)/bags/rovio_out  
@@ -50,7 +75,18 @@
         /rovio/path 
         /rovio/pose_with_covariance_stamped">
     </node>
-  </group>
+  </group>-->
+
+  <!--######################################################################-->
+
+  <node pkg="rosbag"
+    type="record" name="$(arg cfg_kit)_record"
+    required="true"
+    args="record -O $(arg kit_dir)/bags/$(arg cfg_kit)_record  
+      --duration=3m
+      $(arg imu_topic_name)
+      $(arg image_topic_name) ">
+  </node>
 
   <!--######################################################################-->
 

@@ -11,8 +11,13 @@ IMU - [BNO055](https://www.bosch-sensortec.com/products/smart-sensor-systems/bno
 
 Конкретная команда:
 ```bash
-sudo gopro webcam  
-ffmpeg -nostdin -threads 1 -i 'udp://@0.0.0.0:8554?overrun_nonfatal=1&fifo_size=50000000' -f:v mpegts -fflags nobuffer -vf format=yuv420p -f v4l2 /dev/video0
+sudo gopro webcam  \
+--resolution "1080" \
+--fov "wide"
+ffmpeg -nostdin -threads 1 \
+-i 'udp://@0.0.0.0:8554?overrun_nonfatal=1&fifo_size=50000000' \
+-f:v mpegts -fflags nobuffer -vf format=yuv420p  \
+-f v4l2 /dev/video42
 ```
 Теперь камера траслирует изображение как устройство `/dev/video42`.
 
@@ -70,7 +75,7 @@ sudo chmod 666 /dev/i2c-1    # https://answers.ros.org/question/397084/i2c-devic
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./.docker.xauth:/tmp/.docker.xauth:rw
       - ./:/opt/ros/overlay_ws/src/rovio/cfg/gopro10_bno055
-      - /dev/video0:/dev/video0 # Проброс устройства для обработки видео https://foundries.io/insights/blog/sharing-camera-with-docker/
+      - /dev/video42:/dev/video0 # Проброс устройства для обработки видео https://foundries.io/insights/blog/sharing-camera-with-docker/
       - /etc/localtime:/etc/localtime:ro # Монтирование настроек времени
       - /dev/i2c-1:/dev/i2c-1 #Проброс устройства i2c
       

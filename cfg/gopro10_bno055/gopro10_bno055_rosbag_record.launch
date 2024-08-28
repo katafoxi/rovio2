@@ -10,7 +10,7 @@
 <!--  <arg name="conf_prefix" default="16_16" />
   <arg name="bag_name" default="way.bag" />-->
   <arg name="imu_topic_name" default="imu/data" />
-  <arg name="base_camera_image" default="/main_camera/image_raw" />
+  <arg name="base_camera_image" default="main_camera/image_raw" />
   <arg name="image_topic_name" default="/cam0/image_raw" />
   <arg name="rviz" default="false" /> <!-- Включать ли визуализацию rviz?-->
   <!-- Записывать ли результаты работы ROVIO? -->
@@ -55,12 +55,26 @@
 
   <!--######################################################################-->
 
-  <include file="$(find rovio)/cfg/rovio_1cam.launch">
+    <!-- scr
+  https://github.com/dheera/ros-imu-bno055/blob/master/launch/imu.launch -->
+  <node ns="imu" name="imu_node" pkg="imu_bno055"
+    type="bno055_i2c_node"
+    respawn="true"
+    respawn_delay="2">
+    <param name="device" type="string" value="/dev/i2c-1" />
+    <!-- 0x28 == 40 is the default for BNO055 -->
+    <param name="address" type="int" value="40" />
+    <param name="frame_id" type="string" value="imu" />
+  </node>
+
+  <!--######################################################################-->
+
+<!--  <include file="$(find rovio)/cfg/rovio_1cam.launch">
     <arg name="cfg_kit" value="$(arg cfg_kit)" />
     <arg name="conf_prefix" value="$(arg conf_prefix)" />
     <arg name="imu_topic_name" value="$(arg imu_topic_name)" />
     <arg name="image_topic_name" value="$(arg image_topic_name)" />
-  </include>
+  </include>-->
 
   <!--######################################################################-->
 
@@ -85,7 +99,8 @@
     args="record -O $(arg kit_dir)/bags/$(arg cfg_kit)_record  
       --duration=3m
       $(arg imu_topic_name)
-      $(arg image_topic_name) ">
+      main_camera/image_raw
+      main_camera/image_raw/compressed ">
   </node>
 
   <!--######################################################################-->

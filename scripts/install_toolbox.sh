@@ -1,7 +1,22 @@
 #!/bin/bash
 
-CATKIN_WS=$HOME/ws1
+# Describe path to WorkSpace for toolbox
+WS=$HOME/ws1
+WSR=${WS}/src/rovio # path to ROVIO
 
+# cfg_kit - наименование набора конфигов и лаунчеров для 
+# определенной комбинации камера + IMU-датчик.
+kit_name="gopro10_bno055"
+kit_dir=${WSR}/cfg/${kit_name}
+echo -e "
+# ROVIO Toolbox environment
+#-----------------------------------------
+export WS=${WS} \n\
+export WSR=${WSR} \n\
+export kit_name=${kit_name} \n\
+export kit_dir=${kit_dir} \n
+#-----------------------------------------" >> ~/.bashrc
+source "$HOME"/.bashrc
 
 #------------------------------------------------------------------------------
 # Install common tools
@@ -36,8 +51,8 @@ source /opt/ros/$ROS_DISTRO/setup.bash
 
 
 # Create workspace
-mkdir -p $CATKIN_WS/src
-cd $CATKIN_WS
+mkdir -p "$WS"/src
+cd "$WS" || exit
 rosdep init
 catkin init
 catkin config --extend /opt/ros/$ROS1_DISTRO
@@ -73,7 +88,7 @@ sudo apt-get install -y \
     python3-wxgtk4.0 
 
 # Clone and build kalibr repo
-git clone https://github.com/ethz-asl/kalibr.git $CATKIN_WS/src/kalibr
+git clone https://github.com/ethz-asl/kalibr.git "$WS"/src/kalibr
 catkin build kalibr -j2 --mem-limit 70% -DCMAKE_BUILD_TYPE=Release 
 
 
@@ -86,7 +101,7 @@ sudo apt-get install -y \
     #libeigen3-dev
     #libopencv-dev
 git clone --recursive https://github.com/joshi-bharat/gopro_ros.git \
-$CATKIN_WS/src/gopro_ros
+"$WS"/src/gopro_ros
 catkin build gopro_ros -j2 --mem-limit 70% -DCMAKE_BUILD_TYPE=Release 
 
 
@@ -94,7 +109,7 @@ catkin build gopro_ros -j2 --mem-limit 70% -DCMAKE_BUILD_TYPE=Release
 # ALLAN_VARIANCE_ROS - tool for define IMU noise_density and random_walk param.
 # Will produce an imu.yaml file.
 git clone --recursive https://github.com/ori-drs/allan_variance_ros.git \
-$CATKIN_WS/src/allan_variance_ros
+"$WS"/src/allan_variance_ros
 catkin build  allan_variance_ros
 
 
@@ -104,15 +119,15 @@ sudo apt-get install -y \
     freeglut3-dev \
     libglew-dev \
     libyaml-cpp-dev \
-    ros-$ROS_DISTRO-image-transport \
-    ros-$ROS_DISTRO-image-transport-plugins \
-    ros-$ROS_DISTRO-rviz 
+    ros-"$ROS_DISTRO"-image-transport \
+    ros-"$ROS_DISTRO"-image-transport-plugins \
+    ros-"$ROS_DISTRO"-rviz 
 sudo pip3 install -U catkin_tools
 
-git clone https://github.com/ANYbotics/kindr.git $CATKIN_WS/src/kindr
+git clone https://github.com/ANYbotics/kindr.git "$WS"/src/kindr
 git clone \
     --recurse-submodules https://github.com/katafoxi/rovio2.git \
-    $CATKIN_WS/src/rovio
+    "$WS"/src/rovio
 rosdep install --from-paths src --ignore-src -r -y
 
 # uncomment to build ROVIO without OpenGL scene

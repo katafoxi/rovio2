@@ -8,13 +8,16 @@ WSR=${WS}/src/rovio # path to ROVIO
 # определенной комбинации камера + IMU-датчик.
 kit_name="gopro10_bno055"
 kit_dir=${WSR}/cfg/${kit_name}
+kit_clbr="${kit_dir}/calibration"
 echo -e "
 # ROVIO Toolbox environment
 #-----------------------------------------
 export WS=${WS} \n\
 export WSR=${WSR} \n\
 export kit_name=${kit_name} \n\
-export kit_dir=${kit_dir} \n
+export kit_dir=${kit_dir} \n\
+export kit_clbr=${kit_clbr} \n\
+source ${WS}/devel/setup.bash \n
 #-----------------------------------------" >> ~/.bashrc
 source "$HOME"/.bashrc
 

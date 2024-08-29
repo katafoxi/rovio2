@@ -1,12 +1,13 @@
-### Описание конфигурации
+# Описание конфигурации
 
 Камера [GoPro 10](https://gopro.com/ru/ru/shop/cameras/hero10-black/CHDHX-101-master.html)
+
 IMU - [BNO055](https://www.bosch-sensortec.com/products/smart-sensor-systems/bno055/).
 
 Конфигурация предназначена для работы в режиме онлайн.
 
 ## GoPro 10 as webcam
-Для подключения GoPro10 как веб-камеры использовался инструмент [GoPro as webcam on linux](https://github.com/jschmid1/gopro_as_webcam_on_linux).
+[TOOL: GoPro as webcam on linux](https://github.com/jschmid1/gopro_as_webcam_on_linux) инструмент для подключения GoPro10 как веб-камеры. 
 Дальше надо камеру подключить к компьютеру:
 
 Конкретная команда:
@@ -24,6 +25,9 @@ ffmpeg -nostdin -threads 1 \
 ## IMU BNO055 
 
 [GUIDE: How to Publish IMU Data Using ROS and the BNO055 IMU Sensor.](https://automaticaddison.com/how-to-publish-imu-data-using-ros-and-the-bno055-imu-sensor/)
+
+
+[TOOL: ros imu bno055](https://github.com/dheera/ros-imu-bno055?tab=readme-ov-file)
 
 Датчик BNO055 подключить к RPI5 как i2c-устройство.
 
@@ -88,3 +92,27 @@ sudo chmod 666 /dev/i2c-1    # https://answers.ros.org/question/397084/i2c-devic
       - 'c 89:* rmw' #Установка прав доступа к символьному устройству I2C датчику
 ```
 
+## Запуск записи для калибровки
+
+В первом терминале:
+```bash
+sudo chmod 666 /dev/i2c-1  
+sudo gopro webcam  \
+--resolution "1080" \
+--fov "wide"
+ffmpeg -nostdin -threads 1 \
+-i 'udp://@0.0.0.0:8554?overrun_nonfatal=1&fifo_size=50000000' \
+-f:v mpegts -fflags nobuffer -vf format=yuv420p  \
+-f v4l2 /dev/video42
+```
+В следующем терминале:
+```bash
+sudo docker  compose run --rm rovio_online
+```
+В контейнере:
+```bash
+roslaunch rovio gopro10_bno055_rosbag_record.launch
+```
+
+```bash
+```

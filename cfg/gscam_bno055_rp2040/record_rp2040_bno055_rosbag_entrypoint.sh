@@ -16,6 +16,6 @@ export ROS_HOSTNAME=localhost
 export ROS_MASTER_URI=http://localhost:11311
 
 #roslaunch rovio rosbagplay_node.launch
-roslaunch rovio bno055_rosbag_record.launch
+roslaunch rovio record_rp2040_bno055_rosbag.launch
 
 exec "$@"

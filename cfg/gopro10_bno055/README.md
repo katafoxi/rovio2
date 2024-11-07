@@ -3,6 +3,8 @@
 Камера [GoPro 10](https://gopro.com/ru/ru/shop/cameras/hero10-black/CHDHX-101-master.html)
 
 IMU - [BNO055](https://www.bosch-sensortec.com/products/smart-sensor-systems/bno055/).
+[BNO055_datasheet](https://zizibot.ru/directory/sensor/bno055/doc/1526196990adafruit-bno055-absolute-orientation-sensor-1006287.pdf)
+
 
 Конфигурация предназначена для работы в режиме онлайн.
 
@@ -94,7 +96,7 @@ sudo chmod 666 /dev/i2c-1    # https://answers.ros.org/question/397084/i2c-devic
 
 ## Запуск записи для калибровки
 
-В первом терминале:
+В первом терминале:sudo chmod 666 /dev/i2c-1  
 ```bash
 sudo chmod 666 /dev/i2c-1  
 sudo gopro webcam  \
@@ -115,4 +117,40 @@ roslaunch rovio gopro10_bno055_rosbag_record.launch
 ```
 
 ```bash
+sudo modprobe v4l2loopback
 ```
+
+```bash
+sudo gst-launch-1.0 udpsrc uri=udp://0.0.0.0:8554 \! tsdemux latency=100 \! "video/x-h264, profile=baseline, framerate=30/1, width=1920, height=1080, format=(string)YUY2" \! h264parse \! avdec_h264 \! queue \! videoconvert \! v4l2sink device=/dev/video42 sync=false
+
+```
+
+```bash
+sudo nohup bash -c "gopro webcam  --resolution "1080" --fov "wide" --non-interactive && \
+ffmpeg -nostdin -threads 1 -i 'udp://@0.0.0.0:8554?overrun_nonfatal=1&fifo_size=50000000' -f:v mpegts -fflags nobuffer -vf format=gray -f v4l2 /dev/video42" && \
+sudo chmod 666 /dev/video42 && \
+sudo chmod 666 /dev/i2c-1 && cd && cdws
+
+rosbag info --yaml --freq src/rovio/cfg/gopro10_bno055/bags/gopro10_bno055_record.bag
+```
+
+Если вам нужна помощь с поддерживаемыми разрешениями и частотой кадров веб-камеры, попробуйте:
+
+``` bash
+sudo modprobe v4l2loopback
+v4l2-ctl --list-formats-ext
+```
+ --non-interactive
+
+
+
+```bash
+ roslaunch rovio gopro10_bno055_rosbag_play.launch rviz:=true conf_prefix:=16_16 bag_name:=way.bag 
+ ```
+
+
+    std::string encoding = sensor_msgs::image_encodings::BGR8;
+        if (grayscale) {
+          cv::cvtColor(img, img, cv::COLOR_BGR2GRAY);
+          encoding = sensor_msgs::image_encodings::MONO8;
+        }

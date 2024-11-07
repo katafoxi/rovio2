@@ -10,7 +10,7 @@
   <!--  <arg name="conf_prefix" default="16_16" />
   <arg name="bag_name" default="way.bag" />-->
   <arg name="imu_topic_name"      default="imu/data" />
-  <arg name="base_camera_image"   default="main_camera/image_raw" />
+  <arg name="base_camera_image"   default="main_camera/image_raw/compressed" />
   <arg name="image_topic_name"    default="/cam0/image_raw" />
   <arg name="rviz"                default="false" /> <!-- Включать ли визуализацию rviz?-->
   <!-- Записывать ли результаты работы ROVIO? -->
@@ -19,41 +19,31 @@
 
   <!--######################################################################-->
 
-  <include file="$(arg kit_dir)/main_camera.launch">  </include>
-
-  <!--######################################################################-->
-
-  <node name="image_republish" pkg="image_transport"
+<!--  <node name="image_republish" pkg="image_transport"
     type="republish" args="compressed raw">
     <remap from="in" to="$(arg base_camera_image)" />
     <remap from="out" to="$(arg image_topic_name)" />
-  </node>
+  </node>-->
+
+<!--  <node name="image_proc" pkg="image_proc" type="image_proc" ns="$(arg base_camera_image)">
+
+  </node>-->
 
   <!--######################################################################-->
 
-    <!-- scr
-  https://github.com/dheera/ros-imu-bno055/blob/master/launch/imu.launch -->
-  <node ns="imu" name="imu_node" pkg="imu_bno055"
-    type="bno055_i2c_node"
-    respawn="true"
-    respawn_delay="2">
-    <param name="device" type="string" value="/dev/i2c-1" />
-    <!-- 0x28 == 40 is the default for BNO055 -->
-    <param name="address" type="int" value="40" />
-    <param name="frame_id" type="string" value="imu" />
-  </node>
-
-  <!--######################################################################-->
-
-<!--  <include file="$(find rovio)/cfg/rovio_1cam.launch">
+  <include file="$(find rovio)/cfg/rovio_1cam.launch">
     <arg name="cfg_kit" value="$(arg cfg_kit)" />
     <arg name="conf_prefix" value="$(arg conf_prefix)" />
     <arg name="imu_topic_name" value="$(arg imu_topic_name)" />
-    <arg name="image_topic_name" value="$(arg image_topic_name)" />
-  </include>-->
+    <arg name="image_topic_name" value="$(arg base_camera_image)/image_mono" />
+  </include>
 
   <!--######################################################################-->
 
+    <!--rosbag_play node -->
+  <node pkg="rosbag" type="play" name="rosbag_player"
+    args="$(arg kit_dir)/bags/$(arg bag_name)">
+  </node>
 
   <!-- Если необходимо записывать результаты работы ROVIO в rosbag-файл в 
     запустить лаунчер с аргументом record:=true -->
@@ -66,18 +56,6 @@
         /rovio/pose_with_covariance_stamped">
     </node>
   </group>-->
-
-  <!--######################################################################-->
-
-  <node pkg="rosbag"
-    type="record" name="$(arg cfg_kit)_record"
-    required="true"
-    args="record -O $(arg kit_dir)/bags/$(arg cfg_kit)_record  
-      --duration=10
-      $(arg imu_topic_name)
-      main_camera/image_raw
-      main_camera/image_raw/compressed ">
-  </node>
 
   <!--######################################################################-->
 

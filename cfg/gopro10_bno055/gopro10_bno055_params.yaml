@@ -1,0 +1,37 @@
+rosbag_record:
+  imu_topic_name: imu/data
+  base_camera_image: main_camera/image_raw
+  image_topic_name: /cam0/image_raw
+  rviz: false
+  rovio_out_record: false
+
+
+main_camera_frame_node:
+  direction_z: "down"
+  direction_y: "backward"
+
+main_camera_node:
+  rate: 100         # poll rate
+  device_path: "/dev/video0"
+  frame_id: "main_camera_optical"
+  image_width: 1920
+  image_height: 1080
+  camera_info_url: ""
+  capture_delay: 0.0
+  rescale_camera_info: false  #
+  simulator: false
+
+  cv_cap_prop_fps: 30 # camera FPS
+
+main_camera_markers_node:
+  scale: 3.0
+
+main_camera_throttle_node:
+  throttled_topic: true
+  throttled_topic_rate: 5.0
+  rectify: false
+
+
+
+
+

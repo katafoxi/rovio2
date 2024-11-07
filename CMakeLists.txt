@@ -100,7 +100,9 @@ catkin_package(
 	std_msgs
 	tf
 	rosbag
-  yaml_cpp_catkin
+    yaml_cpp_catkin
+	rospy
+	opencv2
 )
 
 include_directories(include ${catkin_INCLUDE_DIRS} ${YamlCpp_INCLUDE_DIRS})
@@ -137,3 +139,6 @@ if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/gtest/")
 	target_link_libraries(test_mlp gtest_main gtest pthread ${catkin_LIBRARIES} ${YamlCpp_LIBRARIES})
 	add_test(test_mlp test_mlp)
 endif()
+catkin_install_python(PROGRAMS scripts/image_converter_node.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)

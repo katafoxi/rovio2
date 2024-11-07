@@ -28,4 +28,7 @@
   <depend>tf</depend>
   <depend>rosbag</depend>
   <depend>yaml_cpp_catkin</depend>
+  <depend>opencv2</depend>
+  <depend>rospy</depend>
+
 </package>

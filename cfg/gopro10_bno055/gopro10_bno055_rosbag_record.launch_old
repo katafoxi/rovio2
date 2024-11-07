@@ -5,21 +5,63 @@
 полученного после конвертации из формата MP4 в формат rosbag.-->
 <launch>
   
-  <arg name="cfg_kit"             default="gopro10_bno055" />
-  <arg name="kit_dir"             default="$(find rovio)/cfg/$(arg cfg_kit)" />
-  <!--  <arg name="conf_prefix" default="16_16" />
+  <arg name="cfg_kit" default="gopro10_bno055" />
+  <arg name="kit_dir" default="$(find rovio)/cfg/$(arg cfg_kit)" />
+  <rosparam file="$(arg kit_dir)/gopro10_bno055_params.yaml" command="load" />
+<!--  <arg name="conf_prefix" default="16_16" />
   <arg name="bag_name" default="way.bag" />-->
-  <arg name="imu_topic_name"      default="imu/data" />
-  <arg name="base_camera_image"   default="main_camera/image_raw" />
-  <arg name="image_topic_name"    default="/cam0/image_raw" />
-  <arg name="rviz"                default="false" /> <!-- Включать ли визуализацию rviz?-->
+  <arg name="imu_topic_name" default="imu/data" />
+  <arg name="base_camera_image" default="main_camera/image_raw" />
+  <arg name="image_topic_name" default="/cam0/image_raw" />
+  <arg name="rviz" default="false" /> <!-- Включать ли визуализацию rviz?-->
   <!-- Записывать ли результаты работы ROVIO? -->
-  <arg name="rovio_out_record"    default="false" /> 
+  <arg name="rovio_out_record" default="false" /> 
+
+  <!-- clover args-->
+  <arg name="camera_info_url" default="" />
+  <arg name="rate" default="100"/> <!-- poll rate -->
+  <arg name="cv_cap_prop_fps" default="30" /> <!-- camera FPS -->
+  <arg name="rescale_camera_info" default="false"/> <!-- automatically rescale camera calibration info -->
+  <arg name="image_width" value="1920"/>
+  <arg name="image_height" value="1080"/>
+
+  <!-- camera node -->
+  <!--https://index.ros.org/p/cv_camera/github-OTL-cv_camera/-->
+  <!-- cv_camera_node args-->
+  <arg name="rate" default="100"/> <!-- poll rate -->
+  <arg name="device_path" default="/dev/video0"/> <!-- v4l2 device_path -->
+  <arg name="frame_id" default="main_camera_optical"/> <!-- v4l2 device_path -->
+  <arg name="image_width" default="1920" />
+  <arg name="image_height" default="1020" />
+  <arg name="camera_info_url" default="" />
+  <arg name="capture_delay" default="0" />
+  <arg name="rescale_camera_info" default="false"/> <!-- automatically rescale camera calibration info -->
+  <!--  CV_CAP_PROP_*-->
+  <arg name="cv_cap_prop_fps" default="30" /> <!-- camera FPS -->
+
+
+
 
 
   <!--######################################################################-->
 
-  <include file="$(arg kit_dir)/main_camera.launch">  </include>
+  <include file="$(arg kit_dir)/main_camera.launch">
+    <arg name="direction_z" default="down"/> <!-- direction the camera points: down, up -->
+    <arg name="direction_y" default="backward"/> <!-- direction the camera cable points: backward, forward -->
+    <arg name="device_path" default="$(arg device_path)"/> 
+    <arg name="throttled_topic" default="true"/> <!-- enable throttled image topic -->
+    <arg name="throttled_topic_rate" default="5.0"/> <!-- throttled image topic rate -->
+    <arg name="rectify" default="false"/> <!-- enable rectification -->
+    <arg name="simulator" default="false"/>
+    <!-- cv_camera_node args-->
+    <arg name="camera_info_url" default="$(arg camera_info_url)" />
+    <arg name="rate" default="$(arg rate)"/> <!-- poll rate -->
+    <arg name="cv_cap_prop_fps" default="$(arg cv_cap_prop_fps)" /> <!-- camera FPS -->
+    <arg name="rescale_camera_info" default="$(arg rescale_camera_info)"/> <!-- automatically rescale camera calibration info -->
+    <arg name="image_width" default="$(arg image_width)" />
+    <arg name="image_height" default="$(arg image_height)" />
+
+  </include>
 
   <!--######################################################################-->
 
@@ -73,7 +115,7 @@
     type="record" name="$(arg cfg_kit)_record"
     required="true"
     args="record -O $(arg kit_dir)/bags/$(arg cfg_kit)_record  
-      --duration=10
+      --duration=3m
       $(arg imu_topic_name)
       main_camera/image_raw
       main_camera/image_raw/compressed ">

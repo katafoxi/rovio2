@@ -28,7 +28,7 @@ RUN <<EOT bash
       catkin init
       git clone https://github.com/ANYbotics/kindr.git ./src/kindr
       git clone --recurse-submodules https://github.com/katafoxi/rovio2.git ./src/rovio
-      git clone https://github.com/CopterExpress/clover.git ./src/clover
+      git clone https://github.com/CopterExpress/clover/tree/master/clover ./src/clover
       git clone https://github.com/katafoxi/bno055_serial_to_ros.git ./src/bno055_serial_to_ros
       rosdep install --from-paths src --ignore-src -r -y
       echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
@@ -60,23 +60,23 @@ EOT
 #------------------------------------------------------------------------------
 # install and build clover pkg
 # https://github.com/CopterExpress/clover/tree/master/clover
-RUN <<EOT bash
+#RUN <<EOT bash
 
-  rosdep install -y --from-paths src --ignore-src
-  catkin build clover -j1 --mem-limit 70%
+  # rosdep install -y --from-paths src --ignore-src
+  #catkin build clover -j1 --mem-limit 70%
 
-EOT
+#EOT
 
 #------------------------------------------------------------------------------
 #install and build bno055_serial_to_ros module
 RUN <<EOT bash
-  sudo apt-get install ros-$ROS_DISTRO-serial
-  sudo apt-get install ros-$ROS_DISTRO-rviz-imu-plugin
+  sudo apt-get install ros-noetic-serial
+  sudo apt-get install ros-noetic-rviz-imu-plugin
 
   source ${WS}/devel/setup.bash
   
   rosdep install -y --from-paths src --ignore-src
-  catkin build bno055_serial_to_ros -j1 --mem-limit 70% \
+  catkin build bno055_serial_to_imu -j1 --mem-limit 70% \
   --cmake-args -DCMAKE_BUILD_TYPE=Release 
 
 EOT

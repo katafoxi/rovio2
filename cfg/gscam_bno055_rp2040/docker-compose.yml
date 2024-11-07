@@ -1,11 +1,11 @@
 services:
-  rovio_online:
-    hostname: ros_rov_gs
+  rovio:
+    hostname: gscam_bno055_rp2040
     container_name: gscam_bno055_rp2040
 #    image: rrovix:latest
     build:
       context: .
-#     dockerfile: Dockerfile
+      dockerfile: Dockerfile
       args:
       - user=${USER}
       - uid=${UIDI:-1000}
@@ -25,15 +25,11 @@ services:
       - ./:/opt/ros/overlay_ws/src/rovio/cfg/gscam_bno055_rp2040
       - /dev/video0:/dev/video0 # Проброс устройства для обработки видео https://foundries.io/insights/blog/sharing-camera-with-docker/
       - /etc/localtime:/etc/localtime:ro # Монтирование настроек времени
-      - /dev/i2c-1:/dev/i2c-1 #Проброс устройства i2c
       - /dev/ttyACM0:/dev/ttyACM0 #Проброс COM-порта для связи с RP2040
       
     devices:  
-    - "/dev/i2c-1:/dev/i2c-1"  #https://stackoverflow.com/questions/40265984/i2c-inside-a-docker-container
     - "/dev/ttyACM0:/dev/ttyACM0"
     device_cgroup_rules:
-      - 'c 81:* rmw' #Установка прав доступа к символьному устроййству основным номером 81:*
-      #ls -l /dev/video0 узнать основной и младший номер устройства камеры
       - 'c 89:* rmw' #Установка прав доступа к символьному устройству I2C датчику
 
     network_mode: host

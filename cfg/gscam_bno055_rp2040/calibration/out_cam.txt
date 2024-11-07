@@ -1,0 +1,432 @@
+[33m[ WARN] [1726651963.045294]: BagImageDatasetReader: truncated 577 / 1776 images (from-to).[0m
+[33m[ WARN] [1726651963.103094]: BagImageDatasetReader: truncated 1049 / 1199 images (frequency)[0m
+importing libraries
+Initializing cam0:
+	Camera model:	  pinhole-radtan
+	Dataset:          /home/mksu/ws1/src/rovio/cfg/gscam_bno055_rp2040/calibration/klbr0_static.bag
+	Topic:            main_camera/image_raw/compressed
+	Number of images: 150
+Extracting calibration target corners
+
+  Progress 10 / 150 	 Time remaining: 22s                  
+  Progress 12 / 150 	 Time remaining: 24s                  
+  Progress 18 / 150 	 Time remaining: 19s                  
+  Progress 26 / 150 	 Time remaining: 14s                  
+  Progress 31 / 150 	 Time remaining: 13s                  
+  Progress 38 / 150 	 Time remaining: 12s                  
+  Progress 45 / 150 	 Time remaining: 10s                  
+  Progress 52 / 150 	 Time remaining: 9s                  
+  Progress 59 / 150 	 Time remaining: 8s                  
+  Progress 66 / 150 	 Time remaining: 7s                  
+  Progress 73 / 150 	 Time remaining: 7s                  
+  Progress 79 / 150 	 Time remaining: 6s                  
+  Progress 85 / 150 	 Time remaining: 5s                  
+  Progress 92 / 150 	 Time remaining: 5s                  
+  Progress 99 / 150 	 Time remaining: 4s                  
+  Progress 104 / 150 	 Time remaining: 4s                  
+  Progress 111 / 150 	 Time remaining: 3s                  
+  Progress 118 / 150 	 Time remaining: 2s                  
+  Progress 124 / 150 	 Time remaining: 2s                  
+  Progress 131 / 150 	 Time remaining: 1s                  
+  Progress 137 / 150 	 Time remaining: 1s                  
+  Progress 144 / 150 	 Time remaining: 0s                  
+  Progress 150 / 150 	 Time remaining:                   
+  Extracted corners for 150 images (of 150 images)                              
+	Projection initialized to: [910.0529526  910.46478565 932.009243   530.77957695]
+	Distortion initialized to: [-0.24785738  0.06289455  0.00068843  0.00127357]
+initializing initial guesses
+initialized cam0 to:
+	 projection cam0: [910.0529526  910.46478565 932.009243   530.77957695]
+	 distortion cam0: [-0.24785738  0.06289455  0.00068843  0.00127357]
+initializing calibrator
+starting calibration...
+
+  Progress 1 / 150 	 Time remaining: 0s                  
+  Progress 2 / 150 	 Time remaining: 0s                  
+  Progress 3 / 150 	 Time remaining: 0s                  
+  Progress 4 / 150 	 Time remaining: 0s                  
+  Progress 5 / 150 	 Time remaining: 0s                  
+  Progress 6 / 150 	 Time remaining: 1s                  
+  Progress 7 / 150 	 Time remaining: 1s                  
+  Progress 8 / 150 	 Time remaining: 1s                  
+  Progress 9 / 150 	 Time remaining: 1s                  
+  Progress 10 / 150 	 Time remaining: 1s                  
+  Progress 11 / 150 	 Time remaining: 1s                  
+  Progress 12 / 150 	 Time remaining: 1s                  
+  Progress 13 / 150 	 Time remaining: 1s                  
+  Progress 14 / 150 	 Time remaining: 1s                  
+  Progress 15 / 150 	 Time remaining: 1s                  
+  Progress 16 / 150 	 Time remaining: 1s                  
+  Progress 17 / 150 	 Time remaining: 1s                  
+  Progress 18 / 150 	 Time remaining: 1s                  
+  Progress 19 / 150 	 Time remaining: 1s                  
+  Progress 20 / 150 	 Time remaining: 1s                  
+  Progress 21 / 150 	 Time remaining: 1s                  
+  Progress 22 / 150 	 Time remaining: 1s                  
+  Progress 23 / 150 	 Time remaining: 1s                  
+  Progress 24 / 150 	 Time remaining: 1s                  
+  Progress 25 / 150 	 Time remaining: 1s                  
+------------------------------------------------------------------
+
+Processed 26 of 150 views with 21 views used
+
+Calibration results 
+====================
+Camera-system parameters:
+cam0 (main_camera/image_raw/compressed):
+    type: <class 'aslam_cv.libaslam_cv_python.DistortedPinholeCameraGeometry'>
+    distortion: [-0.25502024  0.06964031 -0.00007145  0.00016424] +- [0.00219195 0.0017829  0.00025764 0.00025284]
+    projection: [890.03207227 888.02791744 964.91427174 544.47958951] +- [5.40012459 5.31657342 3.32135091 3.32188304]
+    reprojection error: [-0.000001, -0.000002] +- [0.418359, 0.381025]
+
+
+
+Target configuration
+====================
+
+  Type: aprilgrid
+  Tags: 
+    Rows: 6
+    Cols: 6
+    Size: 0.088 [m]
+    Spacing 0.026399999999999996 [m]
+
+------------------------------------------------------------------
+
+  Progress 26 / 150 	 Time remaining: 2s                  
+
+Filtering outliers in all batches...
+
+  Progress 1 / 21 	 Time remaining: 1s                  
+  Progress 2 / 21 	 Time remaining: 1s                  
+  Progress 3 / 21 	 Time remaining: 0s                  
+  Progress 4 / 21 	 Time remaining: 0s                  
+  Progress 5 / 21 	 Time remaining: 0s                  
+  Progress 6 / 21 	 Time remaining: 0s                  
+  Progress 7 / 21 	 Time remaining: 0s                  
+  Progress 8 / 21 	 Time remaining: 0s                  
+  Progress 9 / 21 	 Time remaining: 0s                  
+  Progress 10 / 21 	 Time remaining: 0s                  
+  Progress 11 / 21 	 Time remaining: 0s                  
+  Progress 12 / 21 	 Time remaining: 0s                  
+  Progress 13 / 21 	 Time remaining: 0s                  
+  Progress 14 / 21 	 Time remaining: 0s                  
+  Progress 15 / 21 	 Time remaining: 0s                  
+  Progress 16 / 21 	 Time remaining: 0s                  
+  Progress 17 / 21 	 Time remaining: 0s                  
+  Progress 18 / 21 	 Time remaining: 0s                  
+  Progress 19 / 21 	 Time remaining: 0s                  
+  Progress 20 / 21 	 Time remaining: 0s                  
+  Progress 21 / 21 	 Time remaining:                   
+  Progress 27 / 150 	 Time remaining: 4s                  
+  Progress 28 / 150 	 Time remaining: 4s                  
+  Progress 29 / 150 	 Time remaining: 4s                  
+  Progress 30 / 150 	 Time remaining: 5s                  
+  Progress 31 / 150 	 Time remaining: 5s                  
+  Progress 32 / 150 	 Time remaining: 5s                  
+  Progress 33 / 150 	 Time remaining: 5s                  
+  Progress 34 / 150 	 Time remaining: 5s                  
+  Progress 35 / 150 	 Time remaining: 4s                  
+  Progress 36 / 150 	 Time remaining: 4s                  
+  Progress 37 / 150 	 Time remaining: 4s                  
+  Progress 38 / 150 	 Time remaining: 4s                  
+  Progress 39 / 150 	 Time remaining: 4s                  
+  Progress 40 / 150 	 Time remaining: 4s                  
+  Progress 41 / 150 	 Time remaining: 4s                  
+  Progress 42 / 150 	 Time remaining: 4s                  
+  Progress 43 / 150 	 Time remaining: 4s                  
+  Progress 44 / 150 	 Time remaining: 4s                  
+  Progress 45 / 150 	 Time remaining: 4s                  
+  Progress 46 / 150 	 Time remaining: 4s                  
+  Progress 47 / 150 	 Time remaining: 4s                  
+  Progress 48 / 150 	 Time remaining: 4s                  
+  Progress 49 / 150 	 Time remaining: 4s                  
+  Progress 50 / 150 	 Time remaining: 4s                  
+------------------------------------------------------------------
+
+Processed 51 of 150 views with 27 views used
+
+Calibration results 
+====================
+Camera-system parameters:
+cam0 (main_camera/image_raw/compressed):
+    type: <class 'aslam_cv.libaslam_cv_python.DistortedPinholeCameraGeometry'>
+    distortion: [-0.2452268   0.0624929  -0.00045427  0.0003832 ] +- [0.00160606 0.00117056 0.00017972 0.00017738]
+    projection: [886.10654221 884.67823066 955.58228134 550.25660795] +- [4.40240264 4.34117643 2.56207879 2.93302518]
+    reprojection error: [0.000001, -0.000001] +- [0.410736, 0.373122]
+
+
+
+Target configuration
+====================
+
+  Type: aprilgrid
+  Tags: 
+    Rows: 6
+    Cols: 6
+    Size: 0.088 [m]
+    Spacing 0.026399999999999996 [m]
+
+------------------------------------------------------------------
+
+  Progress 51 / 150 	 Time remaining: 3s                  
+  Progress 52 / 150 	 Time remaining: 3s                  
+  Progress 53 / 150 	 Time remaining: 3s                  
+  Progress 54 / 150 	 Time remaining: 3s                  
+  Progress 55 / 150 	 Time remaining: 3s                  
+  Progress 56 / 150 	 Time remaining: 3s                  
+  Progress 57 / 150 	 Time remaining: 3s                  
+  Progress 58 / 150 	 Time remaining: 3s                  
+  Progress 59 / 150 	 Time remaining: 3s                  
+  Progress 60 / 150 	 Time remaining: 3s                  
+  Progress 61 / 150 	 Time remaining: 3s                  
+  Progress 62 / 150 	 Time remaining: 3s                  
+  Progress 63 / 150 	 Time remaining: 3s                  
+  Progress 64 / 150 	 Time remaining: 3s                  
+  Progress 65 / 150 	 Time remaining: 3s                  
+  Progress 66 / 150 	 Time remaining: 3s                  
+  Progress 67 / 150 	 Time remaining: 3s                  
+  Progress 68 / 150 	 Time remaining: 3s                  
+  Progress 69 / 150 	 Time remaining: 3s                  
+  Progress 70 / 150 	 Time remaining: 3s                  
+  Progress 71 / 150 	 Time remaining: 3s                  
+  Progress 72 / 150 	 Time remaining: 3s                  gscam_bno055_rp2040
+  Progress 73 / 150 	 Time remaining: 3s                  gscam_bno055_rp2040
+  Progress 74 / 150 	 Time remaining: 3s                  
+  Progress 75 / 150 	 Time remaining: 3s                  
+-------------------------------------------------gscam_bno055_rp2040---
+
+Processed 76 of 150 views with 34 views used
+
+Calibration results 
+====================
+Camera-system parameters:
+cam0 (main_camera/image_raw/compressed):
+    type: <class 'aslam_cv.libaslam_cv_python.DistortedPinholeCameraGeometry'>
+    distortion: [-0.24099405  0.05774617 -0.00052445  0.0009468 ] +- [0.00136304 0.00087436 0.00015793 0.00013144]
+    projection: [900.7007246  899.86526772 933.61819933 552.26471212] +- [3.97296833 3.89518134 2.01799949 2.68283757]
+    reprojection error: [-0.000008, 0.000000] +- [0.461322, 0.397715]
+
+
+
+Target configuration
+====================
+
+  Type: aprilgrid
+  Tags: 
+    Rows: 6
+    Cols: 6
+    Size: 0.088 [m]
+    Spacing 0.026399999999999996 [m]
+
+------------------------------------------------------------------
+
+  Progress 76 / 150 	 Time remaining: 3s                  
+  Progress 77 / 150 	 Time remaining: 3s                  
+  Progress 78 / 150 	 Time remaining: 3s                  
+  Progress 79 / 150 	 Time remaining: 3s                  
+  Progress 80 / 150 	 Time remaining: 3s                  
+  Progress 81 / 150 	 Time remaining: 3s                  
+  Progress 82 / 150 	 Time remaining: 3s                  
+  Progress 83 / 150 	 Time remaining: 3s                  
+  Progress 84 / 150 	 Time remaining: 3s                  
+  Progress 85 / 150 	 Time remaining: 3s                  
+  Progress 86 / 150 	 Time remaining: 3s                  
+  Progress 87 / 150 	 Time remaining: 2s                  
+  Progress 88 / 150 	 Time remaining: 2s                  
+  Progress 89 / 150 	 Time remaining: 2s                  
+  Progress 90 / 150 	 Time remaining: 2s                  
+  Progress 91 / 150 	 Time remaining: 2s                  
+  Progress 92 / 150 	 Time remaining: 2s                  
+  Progress 93 / 150 	 Time remaining: 2s                  
+  Progress 94 / 150 	 Time remaining: 2s                  
+  Progress 95 / 150 	 Time remaining: 2s                  
+  Progress 96 / 150 	 Time remaining: 2s                  
+  Progress 97 / 150 	 Time remaining: 2s                  
+  Progress 98 / 150 	 Time remaining: 2s                  
+  Progress 99 / 150 	 Time remaining: 2s                  
+  Progress 100 / 150 	 Time remaining: 2s                  
+------------------------------------------------------------------
+
+Processed 101 of 150 views with 36 views used
+
+Calibration results 
+====================
+Camera-system parameters:
+cam0 (main_camera/image_raw/compressed):
+    type: <class 'aslam_cv.libaslam_cv_python.DistortedPinholeCameraGeometry'>
+    distortion: [-0.24082573  0.0576625  -0.00029058  0.00083408] +- [0.00133254 0.00084715 0.00015166 0.00012481]
+    projection: [902.34223014 901.57598648 932.97355527 549.21072618] +- [3.90721069 3.8255537  1.96940953 2.6514404 ]
+    reprojection error: [-0.000000, 0.000001] +- [0.460775, 0.397743]
+
+
+
+Target configuration
+====================
+
+  Type: aprilgrid
+  Tags: 
+    Rows: 6
+    Cols: 6
+    Size: 0.088 [m]
+    Spacing 0.026399999999999996 [m]
+
+------------------------------------------------------------------
+
+  Progress 101 / 150 	 Time remaining: 2s                  
+  Progress 102 / 150 	 Time remaining: 2s                  
+  Progress 103 / 150 	 Time remaining: 2s                  
+  Progress 104 / 150 	 Time remaining: 2s                  
+  Progress 105 / 150 	 Time remaining: 2s                  
+  Progress 106 / 150 	 Time remaining: 2s                  
+  Progress 107 / 150 	 Time remaining: 2s                  
+  Progress 108 / 150 	 Time remaining: 1s                  
+  Progress 109 / 150 	 Time remaining: 1s                  
+  Progress 110 / 150 	 Time remaining: 1s                  
+  Progress 111 / 150 	 Time remaining: 1s                  
+  Progress 112 / 150 	 Time remaining: 1s                  
+  Progress 113 / 150 	 Time remaining: 1s                  
+  Progress 114 / 150 	 Time remaining: 1s                  
+  Progress 115 / 150 	 Time remaining: 1s                  
+  Progress 116 / 150 	 Time remaining: 1s                  
+  Progress 117 / 150 	 Time remaining: 1s                  
+  Progress 118 / 150 	 Time remaining: 1s                  
+  Progress 119 / 150 	 Time remaining: 1s                  
+  Progress 120 / 150 	 Time remaining: 1s                  
+  Progress 121 / 150 	 Time remaining: 1s                  
+  Progress 122 / 150 	 Time remaining: 1s                  
+  Progress 123 / 150 	 Time remaining: 1s                  
+  Progress 124 / 150 	 Time remaining: 1s                  
+  Progress 125 / 150 	 Time remaining: 1s                  
+------------------------------------------------------------------
+
+Processed 126 of 150 views with 37 views used
+
+Calibration results 
+====================
+Camera-system parameters:
+cam0 (main_camera/image_raw/compressed):
+    type: <class 'aslam_cv.libaslam_cv_python.DistortedPinholeCameraGeometry'>
+    distortion: [-0.24000098  0.05730387 -0.00023478  0.00090345] +- [0.00129923 0.00082574 0.00014485 0.00012239]
+    projection: [900.98461588 900.28216105 932.97347866 549.1806898 ] +- [3.8426727  3.76252446 1.94308746 2.61196506]
+    reprojection error: [-0.000000, -0.000001] +- [0.457512, 0.394483]
+
+
+
+Target configuration
+====================
+
+  Type: aprilgrid
+  Tags: 
+    Rows: 6
+    Cols: 6
+    Size: 0.088 [m]
+    Spacing 0.026399999999999996 [m]
+
+------------------------------------------------------------------
+
+  Progress 126 / 150 	 Time remaining: 1s                  
+  Progress 127 / 150 	 Time remaining: 1s                  
+  Progress 128 / 150 	 Time remaining: 1s                  
+  Progress 129 / 150 	 Time remaining: 0s                  
+  Progress 130 / 150 	 Time remaining: 0s                  
+  Progress 131 / 150 	 Time remaining: 0s                  
+  Progress 132 / 150 	 Time remaining: 0s                  
+  Progress 133 / 150 	 Time remaining: 0s                  
+  Progress 134 / 150 	 Time remaining: 0s                  
+  Progress 135 / 150 	 Time remaining: 0s                  
+  Progress 136 / 150 	 Time remaining: 0s                  
+  Progress 137 / 150 	 Time remaining: 0s                  
+  Progress 138 / 150 	 Time remaining: 0s                  
+  Progress 139 / 150 	 Time remaining: 0s                  
+  Progress 140 / 150 	 Time remaining: 0s                  
+  Progress 141 / 150 	 Time remaining: 0s                  
+  Progress 142 / 150 	 Time remaining: 0s                  
+  Progress 143 / 150 	 Time remaining: 0s                  
+  Progress 144 / 150 	 Time remaining: 0s                  
+  Progress 145 / 150 	 Time remaining: 0s                  
+  Progress 146 / 150 	 Time remaining: 0s                  
+  Progress 147 / 150 	 Time remaining: 0s                  
+  Progress 148 / 150 	 Time remaining: 0s                  
+  Progress 149 / 150 	 Time remaining: 0s                  
+  Progress 150 / 150 	 Time remaining:                   
+
+All views have been processed.
+
+Starting final outlier filtering...
+
+  Progress 1 / 39 	 Time remaining: 1s                  
+  Progress 2 / 39 	 Time remaining: 1s                  
+  Progress 3 / 39 	 Time remaining: 1s                  
+  Progress 4 / 39 	 Time remaining: 1s                  
+  Progress 5 / 39 	 Time remaining: 1s                  
+  Progress 6 / 39 	 Time remaining: 2s                  
+  Progress 7 / 39 	 Time remaining: 2s                  
+  Progress 8 / 39 	 Time remaining: 1s                  
+  Progress 9 / 39 	 Time remaining: 2s                  
+  Progress 10 / 39 	 Time remaining: 1s                  
+  Progress 11 / 39 	 Time remaining: 1s                  
+  Progress 12 / 39 	 Time remaining: 1s                  
+  Progress 13 / 39 	 Time remaining: 1s                  
+  Progress 14 / 39 	 Time remaining: 1s                  
+  Progress 15 / 39 	 Time remaining: 1s                  
+  Progress 16 / 39 	 Time remaining: 1s                  
+  Progress 17 / 39 	 Time remaining: 1s                  
+  Progress 18 / 39 	 Time remaining: 1s                  
+  Progress 19 / 39 	 Time remaining: 1s                  
+  Progress 20 / 39 	 Time remaining: 1s                  
+  Progress 21 / 39 	 Time remaining: 1s                  
+  Progress 22 / 39 	 Time remaining: 0s                  
+  Progress 23 / 39 	 Time remaining: 0s                  
+  Progress 24 / 39 	 Time remaining: 0s                  
+  Progress 25 / 39 	 Time remaining: 0s                  
+  Progress 26 / 39 	 Time remaining: 0s                  
+  Progress 27 / 39 	 Time remaining: 0s                  
+  Progress 28 / 39 	 Time remaining: 0s                  
+  Progress 29 / 39 	 Time remaining: 0s                  
+  Progress 30 / 39 	 Time remaining: 0s                  
+  Progress 31 / 39 	 Time remaining: 0s                  
+  Progress 32 / 39 	 Time remaining: 0s                  
+  Progress 33 / 39 	 Time remaining: 0s                  
+  Progress 34 / 39 	 Time remaining: 0s                  
+  Progress 35 / 39 	 Time remaining: 0s                  
+  Progress 36 / 39 	 Time remaining: 0s                  
+  Progress 37 / 39 	 Time remaining: 0s                  
+  Progress 38 / 39 	 Time remaining: 0s                  
+  Progress 39 / 39 	 Time remaining:                   [33m[ WARN] [1726652001.735926]: Removed 47 outlier corners.[0m
+
+
+..................................................................
+
+Calibration complete.
+
+
+Processed 150 images with 34 images used
+Calibration results 
+====================
+Camera-system parameters:
+cam0 (main_camera/image_raw/compressed):
+    type: <class 'aslam_cv.libaslam_cv_python.DistortedPinholeCameraGeometry'>
+    distortion: [-0.23817822  0.05646082 -0.00034675  0.000473  ] +- [0.00129306 0.00081967 0.00013742 0.00012659]
+    projection: [897.8868869  896.13100574 936.5736771  550.18873623] +- [3.92353931 3.83646122 2.083909   2.70838822]
+    reprojection error: [-0.000003, -0.000000] +- [0.391437, 0.349213]
+
+
+
+Target configuration
+====================
+
+  Type: aprilgrid
+  Tags: 
+    Rows: 6
+    Cols: 6
+    Size: 0.088 [m]
+    Spacing 0.026399999999999996 [m]
+
+Results written to:
+  Saving camera chain calibration to file: /home/mksu/ws1/src/rovio/cfg/gopro10_bno055/calibration/klbr0_static-camchain.yaml
+  Detailed results written to file: /home/mksu/ws1/src/rovio/cfg/gopro10_bno055/calibration/klbr0_static-results-cam.txt
+
+Generating result report...
+  Report written to /home/mksu/ws1/src/rovio/cfg/gopro10_bno055/calibration/klbr0_static-report-cam.pdf
+

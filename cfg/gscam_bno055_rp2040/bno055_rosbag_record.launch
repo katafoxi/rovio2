@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Лаунчер предназначен для записи набора данных IMU, для калибровки-->
+<launch>
+
+  <arg name="cfg_kit" default="gscam_bno055_rp2040" />
+  <arg name="kit_dir" default="$(find rovio)/cfg/$(arg cfg_kit)" />
+  <arg name="bag_name" default="imu_out" />
+
+  <!-- scr
+  https://github.com/dheera/ros-imu-bno055/blob/master/launch/imu.launch -->
+  <node ns="imu" name="imu_node" pkg="imu_bno055"
+    type="bno055_i2c_node"
+    respawn="true"
+    respawn_delay="2">
+    <param name="device" type="string" value="/dev/i2c-1" />
+    <!-- 0x28 == 40 is the default for BNO055 -->
+    <param name="address" type="int" value="40" />
+    <param name="frame_id" type="string" value="imu" />
+  </node>
+
+  <!--  min для калибровки 3часа, после нода выключается -->
+  <node pkg="rosbag"
+    type="record" name="$(arg bag_name)_recorder"
+    required="true"
+    args="record -O $(arg kit_dir)/bags/$(arg bag_name) --duration=3h  --all ">
+  </node>
+
+</launch>

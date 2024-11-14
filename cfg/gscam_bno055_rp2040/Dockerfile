@@ -31,6 +31,7 @@ RUN <<EOT bash
       git clone https://github.com/CopterExpress/clover/tree/master/clover ./src/clover
       git clone https://github.com/katafoxi/bno055_serial_to_ros.git ./src/bno055_serial_to_ros
       rosdep install --from-paths src --ignore-src -r -y
+      catkin config --extend /opt/ros/${ROS_DISTRO}
       echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
       source ~/.bashrc
 
@@ -88,14 +89,18 @@ ARG user
 ARG uid
 ARG gid
 
-#Add new user with our credentials
-ENV USERNAME=${user}
+#Add new sudo user
+ENV USERNAME ${user}
 RUN useradd -m $USERNAME && \
-  echo "$USERNAME:$USERNAME" | chpasswd && \
-  usermod --shell /bin/bash $USERNAME && \
-  usermod  --uid ${uid} $USERNAME && \
-  groupmod --gid ${gid} $USERNAME
-USER ${user}
+        echo "$USERNAME:$USERNAME" | chpasswd && \
+        usermod --shell /bin/bash $USERNAME && \
+        usermod -aG sudo $USERNAME && \
+        echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USERNAME && \
+        chmod 0440 /etc/sudoers.d/$USERNAME && \
+        # Replace 1000 with your user/group id
+        usermod  --uid 1000 $USERNAME && \
+        groupmod --gid 1000 $USERNAME
+USER ${USERNAME}
 
 # https://answers.ros.org/question/10238/unable-to-contact-my-own-server/
 ENV ROS_HOSTNAME=localhost

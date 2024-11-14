@@ -8,31 +8,35 @@ services:
       dockerfile: Dockerfile
       args:
       - user=${USER}
-      - uid=${UIDI:-1000}
-      - gid=${GIDI:-1000}
+      - uid=1000
+      - gid=1000
+
     environment:
-      - DISPLAY=${DISPLAY}
-      - XAUTHORITY=/tmp/.docker.xauth
+      - "QT_X11_NO_MITSHM=1" #fix some QT bugs
+      - "DISPLAY=${DISPLAY}"
+      - "XAUTHORITY=/tmp/.docker.xauth"
+
+    volumes:
+      - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+      - "/tmp/.docker.xauth:/tmp/.docker.xauth:rw"
+      - "/etc/localtime:/etc/localtime:ro" # Монтирование настроек времени
+      - /dev/video0:/dev/video0 # Проброс устройства для обработки видео https://foundries.io/insights/blog/sharing-camera-with-docker/
+
     deploy:
       resources:
         limits:
           cpus: '0.5' # Ограничение в потреблении ресурсов ЦПУ
 
-    # src to connect with X11 https://wiki.ros.org/docker/Tutorials/GUI#Using_Wayland
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - ./.docker.xauth:/tmp/.docker.xauth:rw
-      - ./:/opt/ros/overlay_ws/src/rovio/cfg/gscam_bno055_rp2040
-      - /dev/video0:/dev/video0 # Проброс устройства для обработки видео https://foundries.io/insights/blog/sharing-camera-with-docker/
-      - /etc/localtime:/etc/localtime:ro # Монтирование настроек времени
-      - /dev/ttyACM0:/dev/ttyACM0 #Проброс COM-порта для связи с RP2040
-      
-    devices:  
-    - "/dev/ttyACM0:/dev/ttyACM0"
+
+    devices:
+      - "/dev/ttyACM0:/dev/ttyACM0:rw" #Проброс COM-порта для связи с RP2040
+
     device_cgroup_rules:
       - 'c 89:* rmw' #Установка прав доступа к символьному устройству I2C датчику
+
 
     network_mode: host
     stdin_open: true # docker run -i
     tty: true        # docker run -t
 
+    #command: "/bin/bash"

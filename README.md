@@ -1,3 +1,5 @@
+[WIKI ROVIO](https://github.com/katafoxi/rovio2/wiki)
+
 # README #
 In this fork, some changes have been made for trouble-free installation and deployment of ROVIO_fast to your ROS architecture.
 
@@ -17,6 +19,16 @@ by S.A. Bahnam, C. de Wagter, and G.C.H.E de Croon
 from Delft University of Technology, Kluyverweg 1, Delft
 
 Secondly, we use a cheaper feature selection method that reduces the computational peaks of the algorithm. Use git checkout sparse_rovio to get the code where we make ROVIO computationally more efficient without affecting the accuracy and use git checkout fast_rovio to get the code where we also use the cheap fature selection method.
+
+### Для быстрого запуска каждой конфигурации в Docker-контейнере есть конкретный README.md
+[камера euroc](cfg/euroc/README.md) - конфиги исходного репозитория.
+[камера GoPro10 (RS+IMU)](cfg/gopro10/README.md) - не поддерживает онлайн передачу IMU.
+[камера GoPro10 + внешний BNO055 (RS+IMU)](cfg/gopro10_bno055/README.md) - слишком большая рассинхронизация камера+IMU.
+[камера gscam_bno055_rp2040](cfg/gscam_bno055_rp2040/README.md) - в разработке.
+[камера uzhfpv (RS+IMU)](cfg/uzhfpv/README.md) - конфиги исходного репозитория.
+
+
+
 
 
 ### Installation guide

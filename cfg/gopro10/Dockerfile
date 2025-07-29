@@ -54,7 +54,17 @@ RUN <<EOT bash
   fi
   
 EOT
+# install converter GoPro video to rosbag-file
+RUN <<EOT bash
+  sudo apt install -y libopencv-dev ffmpeg libeigen3-dev
+  source /opt/ros/${ROS_DISTRO}/setup.bash
+  catkin config --extend /opt/ros/${ROS_DISTRO}
+  source ${WS}/devel/setup.bash
 
+  git clone https://github.com/joshi-bharat/gopro_ros.git ./src/gopro_ros
+  catkin build gopro_ros -j1 --mem-limit 70% --cmake-args -DCMAKE_BUILD_TYPE=Release 
+
+EOT
 
 #------------------------------------------------------------------------------
 # add support redirect X11 

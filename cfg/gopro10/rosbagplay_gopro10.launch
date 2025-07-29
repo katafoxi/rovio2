@@ -37,7 +37,7 @@
 
   <!--rosbag_play node -->
   <node pkg="rosbag" type="play" name="rosbag_player"
-    args="--delay 1 --start 240 $(arg kit_dir)/bags/$(arg bag_name)">
+    args="--delay 1 --start 240 $(arg kit_dir)/video_bags_data/$(arg bag_name)">
   </node>
 
   <!-- Если необходимо записывать результаты работы ROVIO в rosbag-файл в 
@@ -45,7 +45,7 @@
   <group if="$(arg rovio_out_record)">
     <node pkg="rosbag"
       type="record" name="rovio_out_recorder"
-      args="record -O $(arg kit_dir)/bags/rovio_out  
+      args="record -O $(arg kit_dir)/video_bags_data/rovio_out  
         /rovio/odometry 
         /rovio/path 
         /rovio/pose_with_covariance_stamped">

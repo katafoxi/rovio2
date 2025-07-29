@@ -79,7 +79,10 @@ RUN useradd -m $USERNAME && \
   echo "$USERNAME:$USERNAME" | chpasswd && \
   usermod --shell /bin/bash $USERNAME && \
   usermod  --uid ${uid} $USERNAME && \
-  groupmod --gid ${gid} $USERNAME
+  groupmod --gid ${gid} $USERNAME && \
+  usermod -aG sudo $USERNAME && \
+  echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
 USER ${user}
 
 #------------------------------------------------------------------------------

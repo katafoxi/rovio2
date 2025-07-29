@@ -1,6 +1,5 @@
-# ------------------CHOSEE type architecture-----------------------------------
-#FROM ros:noetic-ros-base
-FROM arm64v8/ros:noetic-ros-base
+ARG ROS_IMAGE=ros:noetic-ros-base
+FROM --platform=$BUILDPLATFORM ${ROS_IMAGE} as base
 
 SHELL ["/bin/bash", "-c"]
 ARG WS=/opt/ros/overlay_ws
@@ -12,6 +11,7 @@ WORKDIR $WS/
 
 RUN <<EOT bash
   apt-get update && apt-get install -y \
+  mc \
   git \
   pip \
   wget \

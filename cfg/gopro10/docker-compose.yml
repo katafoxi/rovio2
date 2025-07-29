@@ -18,11 +18,16 @@ services:
         limits:
           cpus: '0.5' # Ограничение в потреблении ресурсов ЦПУ
 
+    tty: true       # Эквивалент -t
+    stdin_open: true # Эквивалент -i
+
     # src to connect with X11 https://wiki.ros.org/docker/Tutorials/GUI#Using_Wayland
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./.docker.xauth:/tmp/.docker.xauth:rw
       - .:/opt/ros/overlay_ws/src/rovio/cfg/gopro10
+      - /etc/localtime:/etc/localtime:ro
       
     network_mode: host
-
+    # command: bash -c "/opt/ros/overlay_ws/src/rovio/cfg/gopro10_docker/entrypoint.sh || bash"
+    command: ["/opt/ros/overlay_ws/src/rovio/cfg/gopro10/entrypoint.sh", "--interactive"]

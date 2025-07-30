@@ -15,6 +15,8 @@
   <arg name="rviz" default="false" /> <!-- Включать ли визуализацию rviz?-->
   <!-- Записывать ли результаты работы ROVIO? -->
   <arg name="rovio_out_record" default="false" /> 
+  <arg name="start" default="0" />
+  <arg name="duration" default="10"/>
 
   <!--######################################################################-->
 
@@ -37,7 +39,7 @@
 
   <!--rosbag_play node -->
   <node pkg="rosbag" type="play" name="rosbag_player"
-    args="--delay 1 --start 240 $(arg kit_dir)/video_bags_data/$(arg bag_name)">
+    args="--delay 1 --start=$(arg start) --duration=$(arg duration) $(arg kit_dir)/video_bags_data/$(arg bag_name)">
   </node>
 
   <!-- Если необходимо записывать результаты работы ROVIO в rosbag-файл в 

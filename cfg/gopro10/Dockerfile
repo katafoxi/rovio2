@@ -9,6 +9,11 @@ ARG opengl_scene="false"
 WORKDIR $WS/src
 WORKDIR $WS/
 
+# Добавляем переменные для X11 и GPU
+ENV DEBIAN_FRONTEND=noninteractive
+ENV NVIDIA_DRIVER_CAPABILITIES=all
+ENV NVIDIA_VISIBLE_DEVICES=all
+
 RUN <<EOT bash
       apt-get update && apt-get install -y \
       mc \
@@ -37,10 +42,16 @@ EOT
 #------------------------------------------------------------------------------
 RUN <<EOT bash
       apt-get install -y \
+      xauth \
+      x11-apps \
+      libxv1 \
+      libglu1-mesa \
       libgl1-mesa-glx \
       libgl1-mesa-dri \
       mesa-utils \
-      libnvidia-gl-535
+      libnvidia-gl-535 \
+      at-spi2-core \
+      dbus-x11
 EOT
 
 #------------------------------------------------------------------------------
@@ -77,29 +88,28 @@ RUN <<EOT bash
 
 EOT
 
-#------------------------------------------------------------------------------
-# add support redirect X11 
-# Arguments picked from the command line!
+# Добавляем пользователя ДО создания рабочих директорий
 ARG user
 ARG uid
 ARG gid
 
-#Add new user with our credentials
-ENV USERNAME=${user}
-RUN useradd -m $USERNAME && \
-  echo "$USERNAME:$USERNAME" | chpasswd && \
-  usermod --shell /bin/bash $USERNAME && \
-  usermod  --uid ${uid} $USERNAME && \
-  groupmod --gid ${gid} $USERNAME && \
-  usermod -aG sudo $USERNAME && \
-  echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+RUN useradd -m -u ${uid} ${user} && \
+  echo "${user}:${user}" | chpasswd && \
+  usermod --shell /bin/bash ${user} && \
+  groupmod --gid ${gid} ${user} && \
+  usermod -aG video ${user} && \
+  usermod -aG sudo ${user} && \
+  echo "${user} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-WORKDIR $WS/src/rovio/cfg/gopro10
-ENV XDG_RUNTIME_DIR=/tmp/runtime-${user}
-RUN mkdir -p "$XDG_RUNTIME_DIR" && chmod 700 "$XDG_RUNTIME_DIR"
+# Настраиваем X11 runtime директорию
+ENV XDG_RUNTIME_DIR=/run/user/${uid}
+RUN mkdir -p ${XDG_RUNTIME_DIR} && \
+  chown ${user}:${user} ${XDG_RUNTIME_DIR} && \
+  chmod 700 ${XDG_RUNTIME_DIR}
+
+
 USER ${user}
-
-
+WORKDIR $WS/src/rovio/cfg/${cfg_kit}
 #------------------------------------------------------------------------------
 # launch ros package
 # ENTRYPOINT ["/opt/ros/overlay_ws/src/rovio/cfg/gopro10/entrypoint.sh"]

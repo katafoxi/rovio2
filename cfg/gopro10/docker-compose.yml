@@ -8,21 +8,31 @@ services:
 #     dockerfile: Dockerfile
       args:
       - user=${USER}
-      - uid=${UIDI:-1000}
-      - gid=${GIDI:-1000}
+      - uid=${UID:-1000}
+      - gid=${GID:-1000}
     environment:
       - DISPLAY=${DISPLAY}
+      - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}  # Для правильных прав X11
       - XAUTHORITY=/tmp/.docker.xauth
+      - NVIDIA_DRIVER_CAPABILITIES=all  # Дает доступ ко всем возможностям GPU
+      - NVIDIA_VISIBLE_DEVICES=all  # Делает все GPU видимыми
     deploy:
       resources:
         limits:
           cpus: '0.5' # Ограничение в потреблении ресурсов ЦПУ
+
+    tty: true       # Эквивалент -t
+    stdin_open: true # Эквивалент -i
 
     # src to connect with X11 https://wiki.ros.org/docker/Tutorials/GUI#Using_Wayland
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./.docker.xauth:/tmp/.docker.xauth:rw
       - .:/opt/ros/overlay_ws/src/rovio/cfg/gopro10
-      
+      - /etc/localtime:/etc/localtime:ro
+    devices:
+      - /dev/dri:/dev/dri  # Для аппаратного ускорения (Intel/AMD)
     network_mode: host
-
+    # command: bash -c "/opt/ros/overlay_ws/src/rovio/cfg/gopro10_docker/entrypoint.sh || bash"
+    user: "${UID:-1000}:${GID:-1000}"  # Запуск от текущего пользователя хоста
+    command: ["/opt/ros/overlay_ws/src/rovio/cfg/gopro10/entrypoint.sh", "--interactive"]

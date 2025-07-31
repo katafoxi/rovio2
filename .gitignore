@@ -6,8 +6,14 @@ cmake_install.cmake
 install_manifest.txt
 gtest
 rovio_custom.info
-*.bag
 *.active
+
+# Big files
+*.bag
+*.MP4
+*.mp4
+*.mov
+*.avi
 
 # Compiled Object files
 *.slo

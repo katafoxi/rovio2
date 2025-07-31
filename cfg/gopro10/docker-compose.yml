@@ -9,7 +9,7 @@ services:
       args:
       - user=${USER}
       - uid=${UID:-1000}
-      - gid=${GIDI:-1000}
+      - gid=${GID:-1000}
     environment:
       - DISPLAY=${DISPLAY}
       - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}  # Для правильных прав X11

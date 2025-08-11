@@ -3,7 +3,7 @@ set -e
 
 # Constants
 ROS_OVERLAY_WS="/opt/ros/overlay_ws"
-VIDEO_BAGS_DATA="$ROS_OVERLAY_WS/src/rovio/cfg/gopro10/video_bags_data"
+VIDEO_BAGS_DATA="/bags_video_data"
 LAUNCH_FILES=(
     "gopro_to_rosbag.launch"
     "rosbagplay_gopro10.launch"
@@ -80,7 +80,7 @@ get_bagfiles() {
 process_gopro_to_rosbag() {
     get_gopro_videos
     
-    echo "На хосте добавьте видеофайл в /rovio2/cfg/gopro10/video_bags_data"
+    echo "На хосте добавьте видеофайл в /rovio2/bags_video_data"
     echo "Файл появится в контейнере в $VIDEO_BAGS_DATA"
     
     if [ ${#GP_VIDEOS[@]} -eq 0 ]; then
@@ -150,11 +150,11 @@ launch_bag_playback() {
     start_time=${start_time:-0}
     
     read -p "Введите продолжительность воспроизведения (сек) [по умолчанию - всё]: " duration
-    duration=${duration:--1}
+    duration=${duration:600}
     
     echo "Запускаю воспроизведение: $bag_file"
     roslaunch rovio rosbagplay_gopro10.launch rviz:=true conf_prefix:=16_16 \
-        bag:="$bag_file" start:="$start_time" duration:="$duration"
+        bag_name:="$bag_file" start:="$start_time" duration:="$duration"
 }
 
 # Menu functions

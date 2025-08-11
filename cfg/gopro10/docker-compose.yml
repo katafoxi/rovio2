@@ -37,6 +37,7 @@ services:
       - /etc/passwd:/etc/passwd
       - /etc/group:/etc/group
       - .:/opt/ros/overlay_ws/src/rovio/cfg/gopro10
+      - ../../bags_video_data:/bags_video_data
       - /etc/localtime:/etc/localtime:ro
     devices:
       - /dev/dri:/dev/dri  # Для аппаратного ускорения (Intel/AMD)

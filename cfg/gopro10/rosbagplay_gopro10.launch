@@ -10,7 +10,6 @@
   <arg name="kit_dir" default="$(find rovio)/cfg/$(arg cfg_kit)" />
   <arg name="conf_prefix" default="16_16" />
   <arg name="bag_name" default="way.bag" />
-  <arg name="bag_path"       default="$(arg kit_dir)/video_bags_data/$(arg bag_name)" />
   <arg name="imu_topic_name" default="/gopro/imu" />
   <arg name="base_camera_image" default="gopro/image_raw" />
   <arg name="image_topic_name" default="/cam0/image_raw" />
@@ -18,7 +17,7 @@
   <!-- Записывать ли результаты работы ROVIO? -->
   <arg name="rovio_out_record" default="false" /> 
   <arg name="start" default="0" />
-  <arg name="duration" default="10"/>
+  <arg name="duration" default="600"/>
   
   <!--######################################################################-->
 
@@ -41,7 +40,7 @@
 
   <!--rosbag_play node -->
   <node pkg="rosbag" type="play" name="rosbag_player"
-        args="--clock --delay 1 --start=$(arg start) --duration=$(arg duration) $(arg bag_path)">
+        args="--clock --delay 1 --start=$(arg start) --duration=$(arg duration) $(arg bag_name)">
     <param name="use_sim_time" value="true" />
   </node>
 

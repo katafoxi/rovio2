@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Лаунчер запускает работу алгоритма ROVIO.
+<!-- rosbagplay_gopro10.launch
+Лаунчер запускает работу алгоритма ROVIO.
 На вход алгоритма подаются данные, полученные от проигрывание rosbag-файла,
 полученного после конвертации из формата MP4 в формат rosbag.-->
 <launch>
@@ -13,7 +14,7 @@
   <arg name="imu_topic_name" default="/gopro/imu" />
   <arg name="base_camera_image" default="gopro/image_raw" />
   <arg name="image_topic_name" default="/cam0/image_raw" />
-  <arg name="rviz" default="false" /> <!-- Включать ли визуализацию rviz?-->
+  <arg name="rviz" default="true" /> <!-- Включать ли визуализацию rviz?-->
   <!-- Записывать ли результаты работы ROVIO? -->
   <arg name="rovio_out_record" default="false" /> 
   <arg name="start" default="0" />

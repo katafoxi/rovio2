@@ -9,10 +9,21 @@ ARG opengl_scene="false"
 WORKDIR $WS/src
 WORKDIR $WS/
 
+ENV CUDA_VERSION=10.0.130
+ENV CUDA_PKG_VERSION=10-0=10.0.130-1
+
+ENV PATH=/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 # Добавляем переменные для X11 и GPU
 ENV DEBIAN_FRONTEND=noninteractive
 ENV NVIDIA_DRIVER_CAPABILITIES=all
 ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics,compat32,utility
+ENV NVIDIA_REQUIRE_CUDA=cuda>=10.0 brand=tesla,driver>=384,driver<385
+ENV NCCL_VERSION=2.3.5
+ENV LIBRARY_PATH=/usr/local/cuda/lib64/stubs
+ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:/usr/lib/i386-linux-gnu
+
 
 RUN <<EOT bash
       apt-get update && apt-get install -y \
@@ -20,6 +31,8 @@ RUN <<EOT bash
       git \
       pip \
       wget \
+      nano \
+      byobu \
       freeglut3-dev \
       libglew-dev \
       libyaml-cpp-dev \
@@ -110,6 +123,7 @@ RUN mkdir -p ${XDG_RUNTIME_DIR} && \
 
 USER ${user}
 WORKDIR $WS/src/rovio/cfg/${cfg_kit}
+ENV DISABLE_ROS1_EOL_WARNINGS=1
 #------------------------------------------------------------------------------
 # launch ros package
 # ENTRYPOINT ["/opt/ros/overlay_ws/src/rovio/cfg/gopro10/entrypoint.sh"]
